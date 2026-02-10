@@ -13,4 +13,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeatures
     {
         public ReactiveVariable<float> Value;
     }
+
+    public class RotationSpeed : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+    }
 }

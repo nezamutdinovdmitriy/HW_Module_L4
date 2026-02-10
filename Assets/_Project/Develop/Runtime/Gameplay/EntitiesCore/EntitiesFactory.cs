@@ -29,9 +29,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity
                 .AddMoveDirection()
-                .AddMoveSpeed(new ReactiveVariable<float>(10));
+                .AddMoveSpeed(new ReactiveVariable<float>(10))
+                .AddRotationSpeed(new ReactiveVariable<float>(900));
 
-            entity.AddSystem(new RigidbodyMovementSystem());
+            entity
+                .AddSystem(new RigidbodyMovementSystem())
+                .AddSystem(new RigidbodyRotationSystem());
 
             _entitiesLifeContext.Add(entity);
 
