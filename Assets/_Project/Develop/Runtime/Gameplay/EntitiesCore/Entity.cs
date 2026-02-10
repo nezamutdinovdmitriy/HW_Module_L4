@@ -43,8 +43,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             if (_isInit == false)
                 return;
 
-            foreach (IFixedUpdatableSystem updatable in _updatables)
-                updatable.OnFixedUpdate(deltaTime);
+            foreach (IFixedUpdatableSystem fixedUpdatable in _fixedUpdatables)
+                fixedUpdatable.OnFixedUpdate(deltaTime);
         }
 
         public void Dispose()
@@ -103,6 +103,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             if (system is IUpdatableSystem updatable)
                 _updatables.Add(updatable);
+
+            if(system is IFixedUpdatableSystem fixedUpdatable)
+                _fixedUpdatables.Add(fixedUpdatable);
 
             if (system is IDisposableSystem disposable)
                 _disposables.Add(disposable);
