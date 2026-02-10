@@ -3,7 +3,7 @@ using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Systems;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using UnityEngine;
 
-public class RigidbodyRotationSystem : IInitializableSystem, IUpdatableSystem
+public class RigidbodyRotationSystem : IInitializableSystem, IFixedUpdatableSystem
 {
     private const float DeathZone = 0.05f;
 
@@ -19,7 +19,7 @@ public class RigidbodyRotationSystem : IInitializableSystem, IUpdatableSystem
         _rigidbody = entity.Rigidbody;
     }
 
-    public void OnUpdate(float deltaTime)
+    public void OnFixedUpdate(float deltaTime)
     {
         if (_currentDirection.Value.magnitude <= DeathZone)
             return;
