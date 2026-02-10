@@ -80,5 +80,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
                 }
             }
         }
+
+        private void FixedUpdate()
+        {
+            _entitiesLifeContext?.Update(Time.fixedDeltaTime);
+        }
     }
 }
