@@ -1,4 +1,4 @@
-namespace Assets._Project.Develop.Runtime.Utilities.SceneManagment
+﻿namespace Assets._Project.Develop.Runtime.Utilities.SceneManagment
 {
     public class Scenes
     {

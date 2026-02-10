@@ -1,16 +1,19 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class StandardLoadingScreen : MonoBehaviour, ILoadingScreen
+namespace Assets._Project.Develop.Runtime.Utilities.LoadingScreen
 {
-    public bool IsShown => gameObject.activeSelf;
-
-    private void Awake()
+    public class StandardLoadingScreen : MonoBehaviour, ILoadingScreen
     {
-        Hide();
-        DontDestroyOnLoad(this);
+        public bool IsShown => gameObject.activeSelf;
+
+        private void Awake()
+        {
+            Hide();
+            DontDestroyOnLoad(this);
+        }
+
+        public void Hide() => gameObject.SetActive(false);
+
+        public void Show() => gameObject.SetActive(true);
     }
-
-    public void Hide() => gameObject.SetActive(false);
-
-    public void Show() => gameObject.SetActive(true);
 }

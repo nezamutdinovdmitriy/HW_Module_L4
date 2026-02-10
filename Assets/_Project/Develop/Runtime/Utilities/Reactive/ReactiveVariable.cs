@@ -12,6 +12,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.Reactive
         private T _value;
 
         public ReactiveVariable() => _value = default;
+
         public ReactiveVariable(T value) => _value = value;
 
         public T Value
@@ -20,6 +21,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.Reactive
             set
             {
                 T oldValue = _value;
+
                 _value = value;
 
                 if (_value.Equals(oldValue) == false)
@@ -31,7 +33,6 @@ namespace Assets._Project.Develop.Runtime.Utilities.Reactive
         {
             Subscriber<T, T> subscriber = new Subscriber<T, T>(action, Remove);
             _toAdd.Add(subscriber);
-
             return subscriber;
         }
 
@@ -39,13 +40,13 @@ namespace Assets._Project.Develop.Runtime.Utilities.Reactive
 
         private void Invoke(T oldValue, T newValue)
         {
-            if (_toAdd.Count > 0)
+            if(_toAdd.Count > 0)
             {
                 _subscribers.AddRange(_toAdd);
                 _toAdd.Clear();
             }
 
-            if (_toRemove.Count > 0)
+            if(_toRemove.Count > 0)
             {
                 foreach (Subscriber<T, T> subscriber in _toRemove)
                     _subscribers.Remove(subscriber);

@@ -1,5 +1,4 @@
-using Assets._Project.Develop.Runtime.Gameplay;
-using Assets._Project.Develop.Runtime.Gameplay.Configs;
+﻿using Assets._Project.Develop.Runtime.Configs.Gameplay.Levels;
 using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
@@ -9,25 +8,24 @@ namespace Assets._Project.Develop.Runtime.UI.LevelsMenuPopup
 {
     public class LevelsMenuPopupPresenter : PopupPresenterBase
     {
-        private const string TitleName = "LEVELS";
+        private const string TitleName = "Levels";
 
-        private readonly ConfigsProviderService _configProvider;
+        private readonly ConfigsProviderService _configsProviderService;
         private readonly ProjectPresentersFactory _presentersFactory;
         private readonly ViewsFactory _viewsFactory;
 
         private readonly LevelsMenuPopupView _view;
 
-        private readonly List<LevelTilePresenter> _presenters = new();
+        private readonly List<LevelTilePresenter> _levelTilePresenters = new();
 
         public LevelsMenuPopupPresenter(
-            ICoroutinesPerformer coroutinesPerformer,
-            ConfigsProviderService configProvider,
-            ProjectPresentersFactory presentersFactory,
-            ViewsFactory viewsFactory,
-            LevelsMenuPopupView view)
-            : base(coroutinesPerformer)
+            ICoroutinesPerformer coroutinesPerformer, 
+            ConfigsProviderService configsProviderService, 
+            ProjectPresentersFactory presentersFactory, 
+            ViewsFactory viewsFactory, 
+            LevelsMenuPopupView view) : base(coroutinesPerformer)
         {
-            _configProvider = configProvider;
+            _configsProviderService = configsProviderService;
             _presentersFactory = presentersFactory;
             _viewsFactory = viewsFactory;
             _view = view;
@@ -41,19 +39,19 @@ namespace Assets._Project.Develop.Runtime.UI.LevelsMenuPopup
 
             _view.SetTitle(TitleName);
 
-            LevelsListConfigs levelsListConfigs = _configProvider.GetConfig<LevelsListConfigs>();
+            LevelsListConfig levelsListConfig = _configsProviderService.GetConfig<LevelsListConfig>();
 
-            foreach(LevelsListConfigs.Configs levelConfig in levelsListConfigs.Levels)
+            for (int i = 0; i < levelsListConfig.Levels.Count; i++)
             {
                 LevelTileView levelTileView = _viewsFactory.Create<LevelTileView>(ViewIDs.LevelTile);
 
                 _view.LevelTilesListView.Add(levelTileView);
 
-                LevelTilePresenter levelTilePresenter = _presentersFactory.CreateLevelTilePresenter(levelTileView, levelConfig.GameMode);
+                LevelTilePresenter levelTilePresenter = _presentersFactory.CreateLevelTilePresenter(levelTileView, i + 1);
 
                 levelTilePresenter.Initialize();
 
-                _presenters.Add(levelTilePresenter);
+                _levelTilePresenters.Add(levelTilePresenter);
             }
         }
 
@@ -61,31 +59,30 @@ namespace Assets._Project.Develop.Runtime.UI.LevelsMenuPopup
         {
             base.Dispose();
 
-            foreach (LevelTilePresenter levelTilePresenter in _presenters)
+            foreach (LevelTilePresenter levelTilePresenter in _levelTilePresenters)
             {
                 _view.LevelTilesListView.Remove(levelTilePresenter.View);
                 _viewsFactory.Release(levelTilePresenter.View);
-
                 levelTilePresenter.Dispose();
             }
 
-            _presenters.Clear();
+            _levelTilePresenters.Clear();
         }
 
         protected override void OnPreShow()
         {
             base.OnPreShow();
 
-            foreach (LevelTilePresenter presenter in _presenters)
-                presenter.Subscribe();
+            foreach (LevelTilePresenter levelTilePresenter in _levelTilePresenters)
+                levelTilePresenter.Subscribe();
         }
 
         protected override void OnPreHide()
         {
             base.OnPreHide();
 
-            foreach (LevelTilePresenter presenter in _presenters)
-                presenter.Unsubscribe();
+            foreach (LevelTilePresenter levelTilePresenter in _levelTilePresenters)
+                levelTilePresenter.Unsubscribe();
         }
     }
 }

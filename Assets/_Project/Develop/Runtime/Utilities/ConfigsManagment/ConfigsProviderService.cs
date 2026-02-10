@@ -9,11 +9,19 @@ namespace Assets._Project.Develop.Runtime.Utilities.ConfigsManagment
     {
         private readonly Dictionary<Type, object> _configs = new();
 
-        private readonly IConfigsLoader[] _configsLoaders;
+        private readonly IConfigsLoader[] _loaders;
 
-        public ConfigsProviderService(params IConfigsLoader[] configsLoaders)
+        public ConfigsProviderService(params IConfigsLoader[] loaders)
         {
-            _configsLoaders = configsLoaders;
+            _loaders = loaders;
+        }
+
+        public IEnumerator LoadAsync()
+        {
+            _configs.Clear();
+
+            foreach (IConfigsLoader loader in _loaders)
+                yield return loader.LoadAsync(loadedConfigs => _configs.AddRange(loadedConfigs));
         }
 
         public T GetConfig<T>() where T : class
@@ -22,14 +30,6 @@ namespace Assets._Project.Develop.Runtime.Utilities.ConfigsManagment
                 throw new InvalidOperationException($"Not found config by {typeof(T)}");
 
             return (T)_configs[typeof(T)];
-        }
-
-        public IEnumerator LoadAsync()
-        {
-            _configs.Clear();
-
-            foreach (IConfigsLoader configLoader in _configsLoaders)
-                yield return configLoader.LoadAsync(loadedConfigs => _configs.AddRange(loadedConfigs));
         }
     }
 }

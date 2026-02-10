@@ -1,6 +1,7 @@
-using Assets._Project.Develop.Runtime.Meta.Configs.Wallet;
-using Assets._Project.Develop.Runtime.Meta.Features;
+﻿using Assets._Project.Develop.Runtime.Configs.Meta.Wallet;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
+using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using System;
 using System.Collections.Generic;
 
@@ -8,31 +9,32 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagment.DataProviders
 {
     public class PlayerDataProvider : DataProvider<PlayerData>
     {
-        private readonly ConfigsProviderService _configProviderService;
+        private readonly ConfigsProviderService _configsProviderService;
 
         public PlayerDataProvider(
-            ISaveLoadService saveLoadService,
-            ConfigsProviderService configProviderService) : base(saveLoadService)
+            ISaveLoadSerivce saveLoadSerivce, 
+            ConfigsProviderService configsProviderService) : base(saveLoadSerivce)
         {
-            _configProviderService = configProviderService;
+            _configsProviderService = configsProviderService;
         }
 
         protected override PlayerData GetOriginData()
         {
             return new PlayerData()
             {
-                WalletData = InitWalletData()
+                WalletData = InitWalletData(),
+                CompletedLevels = new()
             };
         }
 
-        private Dictionary<CurrencyType, int> InitWalletData()
+        private Dictionary<CurrencyTypes, int> InitWalletData()
         {
-            Dictionary<CurrencyType, int> walletData = new();
+            Dictionary<CurrencyTypes, int> walletData = new();
 
-            StartWalletConfig walletConfig = _configProviderService.GetConfig<StartWalletConfig>();
+            StartWalletConfig walletConfig = _configsProviderService.GetConfig<StartWalletConfig>();
 
-            foreach (CurrencyType type in Enum.GetValues(typeof(CurrencyType)))
-                walletData[type] = walletConfig.GetValueFor(type);
+            foreach (CurrencyTypes currencyType in Enum.GetValues(typeof(CurrencyTypes)))
+                walletData[currencyType] = walletConfig.GetValueFor(currencyType);
 
             return walletData;
         }

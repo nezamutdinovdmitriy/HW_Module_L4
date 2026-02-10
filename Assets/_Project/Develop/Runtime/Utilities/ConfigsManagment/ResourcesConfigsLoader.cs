@@ -1,6 +1,5 @@
-using Assets._Project.Develop.Runtime.Gameplay.Configs;
-using Assets._Project.Develop.Runtime.Meta.Configs.StatsReset;
-using Assets._Project.Develop.Runtime.Meta.Configs.Wallet;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Levels;
+using Assets._Project.Develop.Runtime.Configs.Meta.Wallet;
 using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
 using System;
 using System.Collections;
@@ -13,13 +12,12 @@ namespace Assets._Project.Develop.Runtime.Utilities.ConfigsManagment
     {
         private readonly ResourcesAssetsLoader _resources;
 
-        private readonly Dictionary<Type, string> _configsResourcesPath = new()
-    {
-            {typeof(LevelsListConfigs), "Configs/Gameplay/LevelsConfigs" },
-            {typeof(StatsResetConfig), "Configs/Meta/StatsResetConfig" },
+        private readonly Dictionary<Type, string> _configsResourcesPaths = new()
+        {
             {typeof(StartWalletConfig), "Configs/Meta/Wallet/StartWalletConfig" },
-            {typeof(CurrencyIconsConfig), "Configs/Meta/Wallet/CurrencyIconsConfig" }
-    };
+            {typeof(CurrencyIconsConfig), "Configs/Meta/Wallet/CurrencyIconsConfig" },
+            {typeof(LevelsListConfig), "Configs/Gameplay/Levels/LevelsListConfig" },
+        };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resources)
         {
@@ -30,12 +28,10 @@ namespace Assets._Project.Develop.Runtime.Utilities.ConfigsManagment
         {
             Dictionary<Type, object> loadedConfigs = new();
 
-            foreach (KeyValuePair<Type, string> configResourcePath in _configsResourcesPath)
+            foreach (KeyValuePair<Type, string> configResourcesPath in _configsResourcesPaths)
             {
-                ScriptableObject config = _resources.Load<ScriptableObject>(configResourcePath.Value);
-
-                loadedConfigs.Add(configResourcePath.Key, config);
-
+                ScriptableObject config = _resources.Load<ScriptableObject>(configResourcesPath.Value);
+                loadedConfigs.Add(configResourcesPath.Key, config);
                 yield return null;
             }
 

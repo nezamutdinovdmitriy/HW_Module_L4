@@ -1,7 +1,9 @@
-using Assets._Project.Develop.Runtime.Infrastructure;
+﻿using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
-using System.Collections;
+using Assets._Project.Develop.Runtime.Utilities.LoadingScreen;
 using System;
+using System.Collections;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Assets._Project.Develop.Runtime.Utilities.SceneManagment
@@ -14,7 +16,10 @@ namespace Assets._Project.Develop.Runtime.Utilities.SceneManagment
 
         private DIContainer _currentSceneContainer;
 
-        public SceneSwitcherService(SceneLoaderService sceneLoaderService, ILoadingScreen loadingScreen, DIContainer projectContainer)
+        public SceneSwitcherService(
+            SceneLoaderService sceneLoaderService, 
+            ILoadingScreen loadingScreen,
+            DIContainer projectContainer)
         {
             _sceneLoaderService = sceneLoaderService;
             _loadingScreen = loadingScreen;
@@ -30,12 +35,12 @@ namespace Assets._Project.Develop.Runtime.Utilities.SceneManagment
             yield return _sceneLoaderService.LoadAsync(Scenes.Empty);
             yield return _sceneLoaderService.LoadAsync(sceneName);
 
-            SceneBootstrap sceneBootstrap = Object.FindAnyObjectByType<SceneBootstrap>();
+            SceneBootstrap sceneBootstrap = Object.FindObjectOfType<SceneBootstrap>();
 
             if (sceneBootstrap == null)
-                throw new NullReferenceException(nameof(sceneBootstrap) + "not found!");
+                throw new NullReferenceException(nameof(sceneBootstrap) + " not found");
 
-            _currentSceneContainer = new(_projectContainer);
+            _currentSceneContainer = new DIContainer(_projectContainer);
 
             sceneBootstrap.ProcessRegistrations(_currentSceneContainer, sceneArgs);
 

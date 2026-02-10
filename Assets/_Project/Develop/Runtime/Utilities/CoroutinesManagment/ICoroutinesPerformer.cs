@@ -5,7 +5,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment
 {
     public interface ICoroutinesPerformer
     {
-        public Coroutine StartPerform(IEnumerator coroutineFunction);
-        public void StopPerform(Coroutine coroutineFunction);
+        Coroutine StartPerform(IEnumerator coroutineFunction);
+        void StopPerform(Coroutine coroutine);
     }
 }

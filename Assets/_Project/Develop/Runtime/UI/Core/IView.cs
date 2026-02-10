@@ -1,7 +1,6 @@
-namespace Assets._Project.Develop.Runtime.UI.Core
+﻿namespace Assets._Project.Develop.Runtime.UI.Core
 {
     public interface IView
     {
-
     }
 }

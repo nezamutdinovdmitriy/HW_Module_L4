@@ -1,4 +1,4 @@
-using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
+﻿using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -9,7 +9,6 @@ namespace Assets._Project.Develop.Runtime.UI.Core
     public abstract class PopupPresenterBase : IPresenter
     {
         public event Action<PopupPresenterBase> CloseRequest;
-        protected abstract PopupViewBase PopupView { get; }
 
         private readonly ICoroutinesPerformer _coroutinesPerformer;
 
@@ -19,6 +18,8 @@ namespace Assets._Project.Develop.Runtime.UI.Core
         {
             _coroutinesPerformer = coroutinesPerformer;
         }
+
+        protected abstract PopupViewBase PopupView { get; }
 
         public virtual void Initialize()
         {
@@ -41,17 +42,23 @@ namespace Assets._Project.Develop.Runtime.UI.Core
         public void Hide(Action callback = null)
         {
             KillProcess();
-            
+
             _process = _coroutinesPerformer.StartPerform(ProcessHide(callback));
         }
 
         protected virtual void OnPostShow() { }
 
-        protected virtual void OnPreShow() => PopupView.CloseRequest += OnCloseRequest;
+        protected virtual void OnPreShow()
+        {
+            PopupView.CloseRequest += OnCloseRequest;
+        }
 
         protected virtual void OnPostHide() { }
 
-        protected virtual void OnPreHide() => PopupView.CloseRequest -= OnCloseRequest;
+        protected virtual void OnPreHide()
+        {
+            PopupView.CloseRequest -= OnCloseRequest;
+        }
 
         protected void OnCloseRequest() => CloseRequest?.Invoke(this);
 

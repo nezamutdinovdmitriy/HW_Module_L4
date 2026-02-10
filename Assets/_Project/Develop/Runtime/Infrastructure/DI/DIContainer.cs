@@ -6,22 +6,24 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.DI
     public class DIContainer
     {
         private readonly Dictionary<Type, Registration> _container = new();
+
         private readonly List<Type> _requests = new();
+
         private readonly DIContainer _parent;
 
-        public DIContainer(DIContainer parent) => _parent = parent;
         public DIContainer() : this(null)
         {
         }
+
+        public DIContainer(DIContainer parent) => _parent = parent;
 
         public IRegistrationOptions RegisterAsSingle<T>(Func<DIContainer, T> creator)
         {
             if (IsAlreadyRegister<T>())
                 throw new InvalidOperationException($"{typeof(T)} already register");
 
-            Registration registration = new(container => creator.Invoke(container));
+            Registration registration = new Registration(container => creator.Invoke(container));
             _container.Add(typeof(T), registration);
-
             return registration;
         }
 
@@ -56,7 +58,7 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.DI
                 _requests.Remove(typeof(T));
             }
 
-            throw new InvalidOperationException($"Registration of {typeof(T)} not exists");
+            throw new InvalidOperationException($"Registration for {typeof(T)} not exists");
         }
 
         public void Initialize()

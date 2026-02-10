@@ -1,7 +1,7 @@
-namespace Assets._Project.Develop.Runtime.Utilities.DataManagment.DataProviders
+﻿namespace Assets._Project.Develop.Runtime.Utilities.DataManagment.DataProviders
 {
     public interface IDataReader<TData> where TData : ISaveData
     {
-        public void ReadFrom(TData data);
+        void ReadFrom(TData data);
     }
 }

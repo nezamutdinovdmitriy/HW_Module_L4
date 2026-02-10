@@ -1,9 +1,10 @@
-using Assets._Project.Develop.Runtime.Gameplay;
+﻿using Assets._Project.Develop.Runtime.Configs.Meta.Wallet;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
-using Assets._Project.Develop.Runtime.Meta.Configs.Wallet;
-using Assets._Project.Develop.Runtime.Meta.Features;
-using Assets._Project.Develop.Runtime.UI.CommonView;
+using Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
+using Assets._Project.Develop.Runtime.UI.CommonViews;
 using Assets._Project.Develop.Runtime.UI.Core;
+using Assets._Project.Develop.Runtime.UI.Core.TestPopup;
 using Assets._Project.Develop.Runtime.UI.LevelsMenuPopup;
 using Assets._Project.Develop.Runtime.UI.Wallet;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
@@ -22,6 +23,18 @@ namespace Assets._Project.Develop.Runtime.UI
             _container = container;
         }
 
+        public CurrencyPresenter CreateCurrencyPresenter(
+            IconTextView view,
+            IReadOnlyVariable<int> currency,
+            CurrencyTypes currencyType)
+        {
+            return new CurrencyPresenter(
+                currency,
+                currencyType,
+                _container.Resolve<ConfigsProviderService>().GetConfig<CurrencyIconsConfig>(),
+                view);
+        }
+
         public WalletPresenter CreateWalletPresenter(IconTextListView view)
         {
             return new WalletPresenter(
@@ -31,24 +44,20 @@ namespace Assets._Project.Develop.Runtime.UI
                 view);
         }
 
-        public CurrencyPresenter CreateCurrencyPresenter(
-            IconTextView view,
-            IReadOnlyVariable<int> currency,
-            CurrencyType currencyType)
+        public TestPopupPresenter CreateTestPopupPresenter(TestPopupView view)
         {
-            return new CurrencyPresenter(
-                currency,
-                currencyType,
-                _container.Resolve<ConfigsProviderService>().GetConfig<CurrencyIconsConfig>(),
-                view);
+            return new TestPopupPresenter(
+                view,
+                _container.Resolve<ICoroutinesPerformer>());
         }
 
-        public LevelTilePresenter CreateLevelTilePresenter(LevelTileView view, GameModeType gameMode)
+        public LevelTilePresenter CreateLevelTilePresenter(LevelTileView view, int levelNumber)
         {
             return new LevelTilePresenter(
+                _container.Resolve<LevelsProgressionService>(),
                 _container.Resolve<SceneSwitcherService>(),
                 _container.Resolve<ICoroutinesPerformer>(),
-                gameMode,
+                levelNumber,
                 view);
         }
 

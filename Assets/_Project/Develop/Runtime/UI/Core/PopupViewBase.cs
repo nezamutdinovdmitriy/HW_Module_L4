@@ -1,17 +1,17 @@
-using System;
+﻿using System;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
 namespace Assets._Project.Develop.Runtime.UI.Core
 {
-    public class PopupViewBase : MonoBehaviour, IShowableView
+    public abstract class PopupViewBase : MonoBehaviour, IShowableView
     {
         public event Action CloseRequest;
 
         [SerializeField] private CanvasGroup _mainGroup;
-        [SerializeField] private CanvasGroup _body;
         [SerializeField] private Image _anticlicker;
+        [SerializeField] private CanvasGroup _body;
 
         [SerializeField] private PopupAnimationTypes _animationType;
 
@@ -21,8 +21,8 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
         private void Awake()
         {
-            _mainGroup.alpha = 0;
             _anticlickerDefaultAlpha = _anticlicker.color.a;
+            _mainGroup.alpha = 0;
         }
 
         public void OnCloseButtonClicked() => CloseRequest?.Invoke();
@@ -33,9 +33,11 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
             OnPreShow();
 
+            //тут потом появятся анимации
             _mainGroup.alpha = 1;
 
-            Sequence animation = PopupAnimationsFactory.CreateShowAnimation(_body, _anticlicker, _animationType, _anticlickerDefaultAlpha);
+            Sequence animation = PopupAnimationsCreator
+                .CreateShowAnimation(_body, _anticlicker, _animationType, _anticlickerDefaultAlpha);
 
             ModifyShowAnimation(animation);
 
@@ -50,7 +52,8 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
             OnPreHide();
 
-            Sequence animation = PopupAnimationsFactory.CreateHideAnimation(_body, _anticlicker, _animationType, _anticlickerDefaultAlpha);
+            Sequence animation = PopupAnimationsCreator
+                .CreateHideAnimation(_body, _anticlicker, _animationType, _anticlickerDefaultAlpha);
 
             ModifyHideAnimation(animation);
 
@@ -61,6 +64,7 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
         protected virtual void ModifyShowAnimation(Sequence animation) { }
         protected virtual void ModifyHideAnimation(Sequence animation) { }
+
         protected virtual void OnPostShow() { }
 
         protected virtual void OnPreShow() { }
@@ -71,6 +75,10 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
         private void OnDestroy() => KillCurrentAnimation();
 
-        private void KillCurrentAnimation() => _currentAnimation?.Kill();
+        private void KillCurrentAnimation()
+        {
+            if (_currentAnimation != null)
+                _currentAnimation.Kill();
+        }
     }
 }

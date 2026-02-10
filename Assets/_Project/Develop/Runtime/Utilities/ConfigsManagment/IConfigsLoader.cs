@@ -6,6 +6,6 @@ namespace Assets._Project.Develop.Runtime.Utilities.ConfigsManagment
 {
     public interface IConfigsLoader
     {
-        public IEnumerator LoadAsync(Action<Dictionary<Type, object>> onConfigsLoaded);
+        IEnumerator LoadAsync(Action<Dictionary<Type, object>> onConfigsLoaded);
     }
 }

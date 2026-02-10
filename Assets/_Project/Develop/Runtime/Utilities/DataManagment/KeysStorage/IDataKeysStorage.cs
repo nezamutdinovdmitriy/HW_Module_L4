@@ -1,7 +1,7 @@
-namespace Assets._Project.Develop.Runtime.Utilities.DataManagment.KeysStorage
+﻿namespace Assets._Project.Develop.Runtime.Utilities.DataManagment.KeysStorage
 {
     public interface IDataKeysStorage
     {
-        public string GetKeyFor<TData>() where TData : ISaveData;
+        string GetKeyFor<TData>() where TData : ISaveData;
     }
 }

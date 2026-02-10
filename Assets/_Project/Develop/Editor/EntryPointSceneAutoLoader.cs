@@ -13,6 +13,5 @@ namespace Assets._Project.Develop.Editor
 
             EditorSceneManager.playModeStartScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(EditorBuildSettings.scenes[0].path);
         }
-
     }
 }

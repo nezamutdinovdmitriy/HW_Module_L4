@@ -1,7 +1,9 @@
-using Assets._Project.Develop.Runtime.UI.Core;
-
-public interface ISubscribedPresenter : IPresenter
+﻿namespace Assets._Project.Develop.Runtime.UI.Core
 {
-    public void Subscribe();
-    public void Unsubscribe();
+    public interface ISubscribedPresenter : IPresenter
+    {
+        void Subscribe();
+
+        void Unsubscribe();
+    }
 }

@@ -1,3 +1,4 @@
+﻿using Assets._Project.Develop.Runtime.UI.Core.TestPopup;
 using Assets._Project.Develop.Runtime.UI.LevelsMenuPopup;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,20 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
         protected abstract Transform PopupLayer { get; }
 
+        public TestPopupPresenter OpenTestPopup(Action closedCallback = null)
+        {
+            TestPopupView view = ViewsFactory.Create<TestPopupView>(ViewIDs.TestPopup, PopupLayer);
+
+            TestPopupPresenter popup = _presentersFactory.CreateTestPopupPresenter(view);
+
+            OnPopupCreated(popup, view, closedCallback);
+
+            return popup;
+        }
+
         public LevelsMenuPopupPresenter OpenLevelsMenuPopup()
         {
-            LevelsMenuPopupView view = ViewsFactory.Create<LevelsMenuPopupView>(ViewIDs.LevelMenuPopup, PopupLayer);
+            LevelsMenuPopupView view = ViewsFactory.Create<LevelsMenuPopupView>(ViewIDs.LevelsMenuPopup, PopupLayer);
 
             LevelsMenuPopupPresenter popup = _presentersFactory.CreateLevelsMenuPopupPresenter(view);
 
@@ -37,9 +49,10 @@ namespace Assets._Project.Develop.Runtime.UI.Core
         public void ClosePopup(PopupPresenterBase popup)
         {
             popup.CloseRequest -= ClosePopup;
+
             popup.Hide(() =>
             {
-                _presenterToInfo[popup].CloseCallback?.Invoke();
+                _presenterToInfo[popup].ClosedCallback?.Invoke();
 
                 DisposeFor(popup);
                 _presenterToInfo.Remove(popup);
@@ -57,12 +70,14 @@ namespace Assets._Project.Develop.Runtime.UI.Core
             _presenterToInfo.Clear();
         }
 
-        protected void OnPopupCreated(PopupPresenterBase popup, PopupViewBase view, Action closedCallback = null)
+        protected void OnPopupCreated(
+            PopupPresenterBase popup,
+            PopupViewBase view,
+            Action closedCallback = null)
         {
-            PopupInfo popupInfo = new(view, closedCallback);
+            PopupInfo popupInfo = new PopupInfo(view, closedCallback);
 
             _presenterToInfo.Add(popup, popupInfo);
-
             popup.Initialize();
             popup.Show();
 
@@ -77,14 +92,14 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
         private class PopupInfo
         {
-            public PopupInfo(PopupViewBase view, Action closeCallback)
+            public PopupInfo(PopupViewBase view, Action closedCallback)
             {
                 View = view;
-                CloseCallback = closeCallback;
+                ClosedCallback = closedCallback;
             }
 
             public PopupViewBase View { get; }
-            public Action CloseCallback { get; }
+            public Action ClosedCallback { get; }
         }
     }
 }

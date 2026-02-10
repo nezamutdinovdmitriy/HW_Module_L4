@@ -2,6 +2,6 @@
 {
     public interface IRegistrationOptions
     {
-        public void NonLazy();
+        void NonLazy();
     }
 }

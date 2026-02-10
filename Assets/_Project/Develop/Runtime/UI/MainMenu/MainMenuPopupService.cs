@@ -1,22 +1,21 @@
-using Assets._Project.Develop.Runtime.UI.Core;
+﻿using Assets._Project.Develop.Runtime.UI.Core;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.UI.MainMenu
 {
     public class MainMenuPopupService : PopupService
     {
-        private readonly MainMenuUIRoot _root;
-
+        private readonly MainMenuUIRoot _uiRoot;
 
         public MainMenuPopupService(
-            ViewsFactory viewsFactory, 
+            ViewsFactory viewsFactory,
             ProjectPresentersFactory presentersFactory,
-            MainMenuUIRoot root)
+            MainMenuUIRoot uiRoot)
             : base(viewsFactory, presentersFactory)
         {
-            _root = root;
+            _uiRoot = uiRoot;
         }
 
-        protected override Transform PopupLayer => _root.PopupsLayer;
+        protected override Transform PopupLayer => _uiRoot.PopupsLayer;
     }
 }

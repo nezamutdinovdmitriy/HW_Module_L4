@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,16 +6,16 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagment.DataProviders
 {
     public abstract class DataProvider<TData> where TData : ISaveData
     {
-        private readonly ISaveLoadService _saveLoadService;
+        private readonly ISaveLoadSerivce _saveLoadSerivce;
 
         private readonly List<IDataWriter<TData>> _writers = new();
         private readonly List<IDataReader<TData>> _readers = new();
 
         private TData _data;
 
-        protected DataProvider(ISaveLoadService saveLoadService)
+        protected DataProvider(ISaveLoadSerivce saveLoadSerivce)
         {
-            _saveLoadService = saveLoadService;
+            _saveLoadSerivce = saveLoadSerivce;
         }
 
         public void RegisterWriter(IDataWriter<TData> writer)
@@ -36,7 +36,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagment.DataProviders
 
         public IEnumerator Load()
         {
-            yield return _saveLoadService.Load<TData>(loadedData => _data = loadedData);
+            yield return _saveLoadSerivce.Load<TData>(loadedData => _data = loadedData);
 
             SendDataToReaders();
         }
@@ -45,12 +45,12 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagment.DataProviders
         {
             UpdateDataFromWriters();
 
-            yield return _saveLoadService.Save(_data);
+            yield return _saveLoadSerivce.Save(_data);
         }
 
         public IEnumerator Exists(Action<bool> onExistsResult)
         {
-            yield return _saveLoadService.Exists<TData>(result => onExistsResult?.Invoke(result));
+            yield return _saveLoadSerivce.Exists<TData>(result => onExistsResult?.Invoke(result));
         }
 
         public void Reset()

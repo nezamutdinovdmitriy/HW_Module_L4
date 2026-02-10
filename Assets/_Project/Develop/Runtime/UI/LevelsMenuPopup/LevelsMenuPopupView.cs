@@ -1,4 +1,4 @@
-using Assets._Project.Develop.Runtime.UI.Core;
+﻿using Assets._Project.Develop.Runtime.UI.Core;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;

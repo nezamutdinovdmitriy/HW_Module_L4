@@ -1,4 +1,4 @@
-using Assets._Project.Develop.Runtime.Utilities.DataManagment.DataRepository;
+﻿using Assets._Project.Develop.Runtime.Utilities.DataManagment.DataRepository;
 using Assets._Project.Develop.Runtime.Utilities.DataManagment.KeysStorage;
 using Assets._Project.Develop.Runtime.Utilities.DataManagment.Serializers;
 using System;
@@ -6,13 +6,16 @@ using System.Collections;
 
 namespace Assets._Project.Develop.Runtime.Utilities.DataManagment
 {
-    public class SaveLoadService : ISaveLoadService
+    public class SaveLoadService : ISaveLoadSerivce
     {
         private readonly IDataSerializer _serializer;
         private readonly IDataKeysStorage _keysStorage;
         private readonly IDataRepository _repository;
 
-        public SaveLoadService(IDataSerializer serializer, IDataKeysStorage keysStorage, IDataRepository repository)
+        public SaveLoadService(
+            IDataSerializer serializer, 
+            IDataKeysStorage keysStorage, 
+            IDataRepository repository)
         {
             _serializer = serializer;
             _keysStorage = keysStorage;
@@ -29,6 +32,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagment
         public IEnumerator Load<TData>(Action<TData> onLoad) where TData : ISaveData
         {
             string key = _keysStorage.GetKeyFor<TData>();
+
             string serializedData = "";
 
             yield return _repository.Read(key, result => serializedData = result);
@@ -49,7 +53,6 @@ namespace Assets._Project.Develop.Runtime.Utilities.DataManagment
         {
             string serializedData = _serializer.Serialize(data);
             string key = _keysStorage.GetKeyFor<TData>();
-
             yield return _repository.Write(key, serializedData);
         }
     }
