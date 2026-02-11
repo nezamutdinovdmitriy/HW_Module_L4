@@ -21,10 +21,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             _entitiesFactory = container.Resolve<EntitiesFactory>();
         }
-
+        
         public void Run()
         {
-            _entity = _entitiesFactory.CreateCharacterControllerEntity(Vector3.zero);
+            _entity = _entitiesFactory.CreateRigidbodyEntity(Vector3.zero);
 
             _isRunning = true;
         }
