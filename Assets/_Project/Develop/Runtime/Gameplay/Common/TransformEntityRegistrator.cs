@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TransformEntityRegistrator : MonoEntityRegistrator
 {
+    [SerializeField] private Transform _transform;
     public override void Register(Entity entity)
     {
-        entity.AddTransform(GetComponent<Transform>());
+        entity.AddTransform(_transform);
     }
 }

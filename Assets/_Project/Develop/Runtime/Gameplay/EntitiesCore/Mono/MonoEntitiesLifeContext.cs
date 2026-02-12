@@ -12,7 +12,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono
         {
             _entitiesLifeContext = entitiesLifeContext;
             _entitiesLifeContext.Removed += Remove;
-        }
+        }   
 
         public void Add(Entity entity, MonoEntity monoEntity)
         {

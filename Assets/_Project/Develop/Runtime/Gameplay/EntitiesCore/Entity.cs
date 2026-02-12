@@ -104,7 +104,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             if (system is IUpdatableSystem updatable)
                 _updatables.Add(updatable);
 
-            if(system is IFixedUpdatableSystem fixedUpdatable)
+            if (system is IFixedUpdatableSystem fixedUpdatable)
                 _fixedUpdatables.Add(fixedUpdatable);
 
             if (system is IDisposableSystem disposable)

@@ -31,7 +31,7 @@ namespace Assets._Project.Develop.Runtime.Utilities.Reactive
 
         public IDisposable Subscribe(Action<T, T> action)
         {
-            Subscriber<T, T> subscriber = new Subscriber<T, T>(action, Remove);
+            Subscriber<T, T> subscriber = new(action, Remove);
             _toAdd.Add(subscriber);
             return subscriber;
         }
@@ -40,13 +40,13 @@ namespace Assets._Project.Develop.Runtime.Utilities.Reactive
 
         private void Invoke(T oldValue, T newValue)
         {
-            if(_toAdd.Count > 0)
+            if (_toAdd.Count > 0)
             {
                 _subscribers.AddRange(_toAdd);
                 _toAdd.Clear();
             }
 
-            if(_toRemove.Count > 0)
+            if (_toRemove.Count > 0)
             {
                 foreach (Subscriber<T, T> subscriber in _toRemove)
                     _subscribers.Remove(subscriber);

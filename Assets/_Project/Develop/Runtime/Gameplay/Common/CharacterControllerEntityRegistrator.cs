@@ -6,9 +6,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Common
 {
     public class CharacterControllerEntityRegistrator : MonoEntityRegistrator
     {
+        [SerializeField] private CharacterController _characterController;
         public override void Register(Entity entity)
         {
-            entity.AddCharacterController(GetComponent<CharacterController>());
+            entity.AddCharacterController(_characterController);
         }
     }
 }

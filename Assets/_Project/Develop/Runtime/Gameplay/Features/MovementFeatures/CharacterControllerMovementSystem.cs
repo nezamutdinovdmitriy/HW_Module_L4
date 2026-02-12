@@ -9,19 +9,19 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeatures
     {
         private CharacterController _characterController;
 
-        private ReactiveVariable<Vector3> _moveDirection;
+        private ReactiveVariable<Vector3> _direction;
         private ReactiveVariable<float> _moveSpeed;
 
         public void OnInit(Entity entity)
         {
             _characterController = entity.CharacterController;
-            _moveDirection = entity.MoveDirection;
+            _direction = entity.RotationDirection;
             _moveSpeed = entity.MoveSpeed;
         }
 
         public void OnUpdate(float deltaTime)
         {
-            Vector3 direction = _moveDirection.Value * _moveSpeed.Value;
+            Vector3 direction = _direction.Value * _moveSpeed.Value;
 
             _characterController.Move(direction);
         }

@@ -7,9 +7,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Common
 {
     public class RigidbodyEntityRegistrator : MonoEntityRegistrator
     {
+        [SerializeField] private Rigidbody _rigidbody;
+
         public override void Register(Entity entity)
         {
-            entity.AddRigidbody(GetComponent<Rigidbody>());
+            entity.AddRigidbody(_rigidbody);
         }
     }
 }
