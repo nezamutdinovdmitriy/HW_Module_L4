@@ -82,7 +82,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
 
             _entitiesLifeContext.Add(entity);
-            _monoEntitiesLifeContext.Add(entity, monoEntity);
 
             return entity;
         }
