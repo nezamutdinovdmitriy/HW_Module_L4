@@ -15,6 +15,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeatures
         public ReactiveVariable<float> Value;
     }
 
+    public class IsMoving : IEntityComponent
+    {
+        public ReactiveVariable<bool> Value;
+    }
+
     public class RotationDirection : IEntityComponent
     {
         public ReactiveVariable<Vector3> Value;

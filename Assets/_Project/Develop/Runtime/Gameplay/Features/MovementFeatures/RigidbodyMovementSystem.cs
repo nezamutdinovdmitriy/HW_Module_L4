@@ -1,6 +1,5 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Systems;
-using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using UnityEngine;
@@ -12,6 +11,8 @@ public class RigidbodyMovementSystem : IInitializableSystem, IUpdatableSystem
 
     private Rigidbody _rigidbody;
 
+    private ReactiveVariable<bool> _isMoving;
+
     private ICompositeCondition _canMove;
     public void OnInit(Entity entity)
     {
@@ -20,6 +21,8 @@ public class RigidbodyMovementSystem : IInitializableSystem, IUpdatableSystem
         _rigidbody = entity.Rigidbody;
 
         _canMove = entity.CanMove;
+
+        _isMoving = entity.IsMoving;
     }
 
     public void OnUpdate(float deltaTime)
@@ -31,6 +34,8 @@ public class RigidbodyMovementSystem : IInitializableSystem, IUpdatableSystem
         }
 
         Vector3 velocity = _moveDirection.Value.normalized * _moveSpeed.Value;
+
+        _isMoving.Value = velocity.magnitude > 0;
 
         _rigidbody.velocity = velocity;
     }

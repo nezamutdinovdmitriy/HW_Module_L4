@@ -30,8 +30,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
                 QueryTriggerInteraction.Ignore);
 
             RemoveSelfFromContacts();
-
-            Debug.Log($"Contacts Count {_contacts.Count}");
         }
 
         private void RemoveSelfFromContacts()
