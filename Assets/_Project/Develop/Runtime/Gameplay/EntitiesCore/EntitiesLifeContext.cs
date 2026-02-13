@@ -37,6 +37,8 @@ public class EntitiesLifeContext : IDisposable
 
     public void FixedUpdate(float deltaTime)
     {
+        for (int i = 0; i < _enities.Count; i++)
+            _enities[i].OnFixedUpdate(deltaTime);
     }
 
     public void Remove(Entity entity)

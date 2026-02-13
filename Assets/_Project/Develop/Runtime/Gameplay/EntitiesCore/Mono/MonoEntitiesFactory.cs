@@ -27,6 +27,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono
 
             MonoEntity viewInstance = Object.Instantiate(prefab, position, Quaternion.identity, null);
 
+            viewInstance.Initialize(_colllidersRegistryService);
+
             viewInstance.Link(entity);
 
             _monoEntitiesLifeContext.Add(entity, viewInstance);
