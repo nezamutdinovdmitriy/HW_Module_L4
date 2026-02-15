@@ -3,6 +3,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Attack;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Attack.Shoot;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Energy;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Sensors;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
@@ -177,6 +178,78 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new EndAttackSystem())
                 .AddSystem(new AttackCooldownTimerSystem())
                 .AddSystem(new ApplyDamageSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DisableCollidersOnDeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
+        public Entity CreateHeroAlternative(Vector3 position)
+        {
+            Entity entity = CreateEmpty();
+            MonoEntity monoEntity = _monoEntitiesFactory.Create(entity, position, "Entities/Characters/HeroAlternative");
+
+            entity
+                .AddMaxHealth(new ReactiveVariable<float>(100))
+                .AddCurrentHealth(new ReactiveVariable<float>(100))
+                .AddMaxEnergy(new ReactiveVariable<float>(100))
+                .AddCurrentEnergy(new ReactiveVariable<float>(100))
+                .AddEnergyRegenTickInterval(new ReactiveVariable<float>(5))
+                .AddEnergyRegenCurrentTime(new ReactiveVariable<float>(5))
+                .AddEnergyRegenValuePerTick(new ReactiveVariable<float>(10))
+                .AddIsDead()
+                .AddInDeathProcess()
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+                .AddDeathProcessCurrentTime()
+                .AddTakeDamageRequest()
+                .AddTakeDamageEvent()
+                .AddAttackProcessInitialTime(new ReactiveVariable<float>(3))
+                .AddAttackProcessCurrentTime()
+                .AddInAttackProcess()
+                .AddStartAttackRequest()
+                .AddStartAttackEvent()
+                .AddEndAttackEvent()
+                .AddAttackDelayTime(new ReactiveVariable<float>(1))
+                .AddAttackDelayEndEvent()
+                .AddAttackCanceledEvent()
+                .AddAttackCooldownInitialTime(new ReactiveVariable<float>(2))
+                .AddAttackCooldownCurrentTime()
+                .AddInAttackCooldown();
+
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition canStartAttack = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false))
+                .Add(new FuncCondition(() => entity.InAttackProcess.Value == false))
+                .Add(new FuncCondition(() => entity.IsMoving.Value == false))
+                .Add(new FuncCondition(() => entity.InAttackCooldown.Value == false));
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage)
+                .AddCanStartAttack(canStartAttack);
+
+            entity
+                .AddSystem(new StartAttackSystem())
+                .AddSystem(new AttackProcessTimerSystem())
+                .AddSystem(new AttackDelayEndTriggerSystem())
+                .AddSystem(new EndAttackSystem())
+                .AddSystem(new AttackCooldownTimerSystem())
+                .AddSystem(new ApplyDamageSystem())
+                .AddSystem(new EnergySystem())
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DisableCollidersOnDeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())

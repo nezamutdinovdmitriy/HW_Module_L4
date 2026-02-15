@@ -265,6 +265,76 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle.DisableCollidersOnDeath() {Value = vV}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Energy.MaxEnergy MaxEnergyC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Energy.MaxEnergy>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> MaxEnergy => MaxEnergyC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddMaxEnergy()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.MaxEnergy() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddMaxEnergy(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.MaxEnergy() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Energy.CurrentEnergy CurrentEnergyC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Energy.CurrentEnergy>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> CurrentEnergy => CurrentEnergyC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddCurrentEnergy()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.CurrentEnergy() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddCurrentEnergy(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.CurrentEnergy() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenTickInterval EnergyRegenTickIntervalC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenTickInterval>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> EnergyRegenTickInterval => EnergyRegenTickIntervalC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddEnergyRegenTickInterval()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenTickInterval() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddEnergyRegenTickInterval(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenTickInterval() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenCurrentTime EnergyRegenCurrentTimeC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenCurrentTime>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> EnergyRegenCurrentTime => EnergyRegenCurrentTimeC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddEnergyRegenCurrentTime()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenCurrentTime() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddEnergyRegenCurrentTime(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenCurrentTime() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenValuePerTick EnergyRegenValuePerTickC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenValuePerTick>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> EnergyRegenValuePerTick => EnergyRegenValuePerTickC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddEnergyRegenValuePerTick()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenValuePerTick() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddEnergyRegenValuePerTick(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Energy.EnergyRegenValuePerTick() {Value = vV}); 
+		}
+
 		public Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage.BodyContactDamage BodyContactDamageC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage.BodyContactDamage>();
 
 		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> BodyContactDamage => BodyContactDamageC.Value;
