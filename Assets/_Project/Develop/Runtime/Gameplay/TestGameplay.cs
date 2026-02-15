@@ -1,5 +1,4 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
-using Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeatures;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using UnityEngine;
 
