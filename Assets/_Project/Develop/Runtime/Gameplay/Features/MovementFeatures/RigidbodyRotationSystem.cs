@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class RigidbodyRotationSystem : IInitializableSystem, IUpdatableSystem
 {
-    private const float DeathZone = 0.05f;
-
     private ReactiveVariable<float> _rotateSpeed;
     private ReactiveVariable<Vector3> _direction;
 
@@ -22,6 +20,9 @@ public class RigidbodyRotationSystem : IInitializableSystem, IUpdatableSystem
         _rigidbody = entity.Rigidbody;
 
         _canRotate = entity.CanRotate;
+
+        if (_direction.Value != Vector3.zero)
+            _rigidbody.transform.rotation = Quaternion.LookRotation(_direction.Value.normalized);
     }
 
     public void OnUpdate(float deltaTime)
@@ -29,7 +30,7 @@ public class RigidbodyRotationSystem : IInitializableSystem, IUpdatableSystem
         if (_canRotate.Evaluate() == false)
             return;
 
-        if (_direction.Value.magnitude <= DeathZone)
+        if (_direction.Value == Vector3.zero)
             return;
 
         Quaternion lookRotaton = Quaternion.LookRotation(_direction.Value.normalized);
