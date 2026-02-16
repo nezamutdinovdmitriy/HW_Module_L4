@@ -22,11 +22,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
         }
 
         private static CollidersRegistryService CreateCollidersRegistryService(DIContainer container)
-            => new();
+            => new CollidersRegistryService();
 
         private static MonoEntitiesFactory CreateMonoEntitiesFactory(DIContainer container)
         {
-            return new(
+            return new MonoEntitiesFactory(
                 container.Resolve<ResourcesAssetsLoader>(),
                 container.Resolve<MonoEntitiesLifeContext>(),
                 container.Resolve<CollidersRegistryService>());

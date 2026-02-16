@@ -265,50 +265,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle.DisableCollidersOnDeath() {Value = vV}); 
 		}
 
-		public Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionRadius ExplosionRadiusC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionRadius>();
-
-		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> ExplosionRadius => ExplosionRadiusC.Value;
-
-		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionRadius()
-		{
-			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionRadius() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
-		}
-
-		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionRadius(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
-		{
-			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionRadius() {Value = vV}); 
-		}
-
-		public Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionDamage ExplosionDamageC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionDamage>();
-
-		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> ExplosionDamage => ExplosionDamageC.Value;
-
-		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionDamage()
-		{
-			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionDamage() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
-		}
-
-		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionDamage(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
-		{
-			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionDamage() {Value = vV}); 
-		}
-
-		public Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.CanStartExplosion CanStartExplosionC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.CanStartExplosion>();
-
-		public Assets._Project.Develop.Runtime.Utilities.Conditions.ICompositeCondition CanStartExplosion => CanStartExplosionC.Value;
-
-		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddCanStartExplosion(Assets._Project.Develop.Runtime.Utilities.Conditions.ICompositeCondition vV)
-		{
-			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.CanStartExplosion() {Value = vV}); 
-		}
-
-		public Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionSystem ExplosionSystemC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionSystem>();
-
-		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionSystem()
-		{
-			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Explosion.ExplosionSystem() ); 
-		}
-
 		public Assets._Project.Develop.Runtime.Gameplay.Features.Energy.MaxEnergy MaxEnergyC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Energy.MaxEnergy>();
 
 		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> MaxEnergy => MaxEnergyC.Value;
