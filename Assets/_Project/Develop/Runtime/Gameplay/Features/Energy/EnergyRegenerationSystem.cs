@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.Energy
 {
-    public class EnergySystem : IInitializableSystem, IUpdatableSystem
+    public class EnergyRegenerationSystem : IInitializableSystem, IUpdatableSystem
     {
         private ReactiveVariable<float> _maxEnergy;
         private ReactiveVariable<float> _currentEnergy;
@@ -39,6 +39,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Energy
 
                 _energyRegenCurrentTime.Value = _energyRegenTickInterval.Value;
             }
+
+            Debug.Log("CurrentEnergy: " + _currentEnergy.Value);
         }
     }
 }
