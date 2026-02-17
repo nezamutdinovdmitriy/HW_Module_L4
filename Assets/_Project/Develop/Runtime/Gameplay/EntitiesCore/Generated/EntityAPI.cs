@@ -2,6 +2,127 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 {
 	public partial class Entity
 	{
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationStartRequest TeleportationStartRequestC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationStartRequest>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent TeleportationStartRequest => TeleportationStartRequestC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationStartRequest()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationStartRequest() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationStartRequest(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationStartRequest() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationStartEvent TeleportationStartEventC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationStartEvent>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent TeleportationStartEvent => TeleportationStartEventC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationStartEvent()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationStartEvent() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationStartEvent(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationStartEvent() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationEndEvent TeleportationEndEventC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationEndEvent>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent TeleportationEndEvent => TeleportationEndEventC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationEndEvent()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationEndEvent() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationEndEvent(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationEndEvent() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationInProcess TeleportationInProcessC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationInProcess>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Boolean> TeleportationInProcess => TeleportationInProcessC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationInProcess()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationInProcess() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Boolean>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationInProcess(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Boolean> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationInProcess() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCanStart TeleportationCanStartC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCanStart>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Conditions.ICompositeCondition TeleportationCanStart => TeleportationCanStartC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationCanStart(Assets._Project.Develop.Runtime.Utilities.Conditions.ICompositeCondition vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCanStart() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCost TeleportationCostC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCost>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> TeleportationCost => TeleportationCostC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationCost()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCost() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationCost(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCost() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationInitialTime TeleportationInitialTimeC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationInitialTime>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> TeleportationInitialTime => TeleportationInitialTimeC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationInitialTime()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationInitialTime() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationInitialTime(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationInitialTime() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCurrentTime TeleportationCurrentTimeC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCurrentTime>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> TeleportationCurrentTime => TeleportationCurrentTimeC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationCurrentTime()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCurrentTime() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationCurrentTime(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationCurrentTime() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationRadiusArea TeleportationRadiusAreaC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationRadiusArea>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> TeleportationRadiusArea => TeleportationRadiusAreaC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationRadiusArea()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationRadiusArea() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeleportationRadiusArea(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation.TeleportationRadiusArea() {Value = vV}); 
+		}
+
 		public Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.BodyCollider BodyColliderC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.BodyCollider>();
 
 		public UnityEngine.CapsuleCollider BodyCollider => BodyColliderC.Value;

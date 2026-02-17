@@ -6,10 +6,12 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Energy;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Sensors;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.Optimization;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
@@ -198,8 +200,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddCurrentHealth(new ReactiveVariable<float>(100))
                 .AddMaxEnergy(new ReactiveVariable<float>(100))
                 .AddCurrentEnergy(new ReactiveVariable<float>(100))
-                .AddEnergyRegenTickInterval(new ReactiveVariable<float>(1))
-                .AddEnergyRegenCurrentTime(new ReactiveVariable<float>(1))
+                .AddEnergyRegenTickInterval(new ReactiveVariable<float>(5))
+                .AddEnergyRegenCurrentTime(new ReactiveVariable<float>(5))
                 .AddEnergyRegenValuePerTick(new ReactiveVariable<float>(15))
                 .AddIsDead()
                 .AddInDeathProcess()
@@ -218,7 +220,15 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddAttackCanceledEvent()
                 .AddAttackCooldownInitialTime(new ReactiveVariable<float>(2))
                 .AddAttackCooldownCurrentTime()
-                .AddInAttackCooldown();
+                .AddInAttackCooldown()
+                .AddTeleportationStartEvent()
+                .AddTeleportationEndEvent()
+                .AddTeleportationStartRequest()
+                .AddTeleportationInProcess()
+                .AddTeleportationCost(new ReactiveVariable<float>(50))
+                .AddTeleportationInitialTime(new ReactiveVariable<float>(2))
+                .AddTeleportationCurrentTime()
+                .AddTeleportationRadiusArea(new ReactiveVariable<float>(3));
 
             ICompositeCondition mustDie = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
@@ -236,11 +246,17 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .Add(new FuncCondition(() => entity.IsMoving.Value == false))
                 .Add(new FuncCondition(() => entity.InAttackCooldown.Value == false));
 
+            ICompositeCondition canStartTeleportation = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false))
+                .Add(new FuncCondition(() => entity.TeleportationInProcess.Value == false))
+                .Add(new FuncCondition(() => entity.CurrentEnergy.Value >= entity.TeleportationCost.Value));
+
             entity
                 .AddMustDie(mustDie)
                 .AddMustSelfRelease(mustSelfRelease)
                 .AddCanApplyDamage(canApplyDamage)
-                .AddCanStartAttack(canStartAttack);
+                .AddCanStartAttack(canStartAttack)
+                .AddTeleportationCanStart(canStartTeleportation);
 
             entity
                 .AddSystem(new StartAttackSystem())
@@ -250,6 +266,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new AttackCooldownTimerSystem())
                 .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new EnergyRegenerationSystem())
+                .AddSystem(new TeleportationStartSystem())
+                .AddSystem(new TeleportationProcessTimerSystem())
+                .AddSystem(new TeleportationEndSystem())
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DisableCollidersOnDeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())

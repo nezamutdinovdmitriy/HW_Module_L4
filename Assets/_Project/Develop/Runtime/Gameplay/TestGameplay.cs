@@ -35,7 +35,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay
                 return;
 
             if (Input.GetKeyDown(KeyCode.Space))
-                _entity.CurrentEnergy.Value -= 30;
+                _entity.TeleportationStartRequest.Invoke();
+
+            if (Input.GetKeyDown(KeyCode.C))
+                _entity.TeleportationInProcess.Value = false;
 
             if (Input.GetKeyDown(KeyCode.R))
                 _entity.StartAttackRequest.Invoke();

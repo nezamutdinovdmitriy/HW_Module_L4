@@ -38,9 +38,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Energy
                 _currentEnergy.Value = Mathf.Min(_currentEnergy.Value + regenAmount, _maxEnergy.Value);
 
                 _energyRegenCurrentTime.Value = _energyRegenTickInterval.Value;
+                Debug.Log("CurrentEnergy: " + _currentEnergy.Value);
             }
-
-            Debug.Log("CurrentEnergy: " + _currentEnergy.Value);
         }
     }
 }
