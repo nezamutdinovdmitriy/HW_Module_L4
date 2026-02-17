@@ -37,11 +37,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             if (Input.GetKeyDown(KeyCode.Space))
                 _entity.TeleportationStartRequest.Invoke();
 
-            if (Input.GetKeyDown(KeyCode.C))
-                _entity.TeleportationInProcess.Value = false;
-
             if (Input.GetKeyDown(KeyCode.R))
-                _entity.StartAttackRequest.Invoke();
+                _entity.ExplosionStartRequest.Invoke();
 
             //Vector3 input = new(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             

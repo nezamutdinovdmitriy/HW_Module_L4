@@ -20,7 +20,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
         public void OnInit(Entity entity)
         {
             _contacts = entity.ContactsCollidersBuffer;
-            _contactsEntities = entity.ContactsEntiriesBuffer;
+            _contactsEntities = entity.ContactsEntitiesBuffer;
         }
         public void OnFixedUpdate(float deltaTime)
         {

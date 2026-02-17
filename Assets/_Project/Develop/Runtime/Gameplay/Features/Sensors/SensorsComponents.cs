@@ -15,12 +15,27 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
         public LayerMask Value;
     }
 
+    public class AreaContactsDetectingMask : IEntityComponent
+    {
+        public LayerMask Value;
+    }
+
     public class ContactsCollidersBuffer : IEntityComponent
     {
         public Buffer<Collider> Value;
     }
 
-    public class ContactsEntiriesBuffer : IEntityComponent
+    public class ContactsEntitiesBuffer : IEntityComponent
+    {
+        public Buffer<Entity> Value;
+    }
+
+    public class AreaContactsCollidersBuffer : IEntityComponent
+    {
+        public Buffer<Collider> Value;
+    }
+
+    public class AreaContactsEntitiesBuffer : IEntityComponent
     {
         public Buffer<Entity> Value;
     }

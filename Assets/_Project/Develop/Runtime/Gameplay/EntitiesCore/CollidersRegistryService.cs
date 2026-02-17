@@ -20,8 +20,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
         public Entity GetBy(Collider collider)
         {
             if (_colliderToEntity.TryGetValue(collider, out Entity entity))
+            {
                 return entity;
-
+            }
             return null;
         }
     }

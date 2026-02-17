@@ -1,6 +1,7 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Attack;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Attack.Explosion;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Attack.Shoot;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Energy;
@@ -58,7 +59,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddTakeDamageEvent()
                 .AddContactsDetectingMask(UnityLayersAPI.LayerMaskCharacters)
                 .AddContactsCollidersBuffer(new Buffer<Collider>(64))
-                .AddContactsEntiriesBuffer(new Buffer<Entity>(64))
+                .AddContactsEntitiesBuffer(new Buffer<Entity>(64))
                 .AddBodyContactDamage(new ReactiveVariable<float>(50));
 
             ICompositeCondition canMove = new CompositeCondition()
@@ -209,18 +210,38 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddDeathProcessCurrentTime()
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
-                .AddAttackProcessInitialTime(new ReactiveVariable<float>(3))
-                .AddAttackProcessCurrentTime()
-                .AddInAttackProcess()
-                .AddStartAttackRequest()
-                .AddStartAttackEvent()
-                .AddEndAttackEvent()
-                .AddAttackDelayTime(new ReactiveVariable<float>(1))
-                .AddAttackDelayEndEvent()
-                .AddAttackCanceledEvent()
-                .AddAttackCooldownInitialTime(new ReactiveVariable<float>(2))
-                .AddAttackCooldownCurrentTime()
-                .AddInAttackCooldown()
+
+                .AddExplosionStartRequest()
+                .AddExplosionStartEvent()
+                .AddExplosionEndEvent()
+                .AddExplosionProcessInitialTime(new ReactiveVariable<float>(3))
+                .AddExplosionProcessCurrentTime()
+                .AddExplosionInProcess()
+                .AddExplosionDelayTime(new ReactiveVariable<float>(1))
+                .AddExplosionDelayEndEvent()
+                .AddExplosionInstantDamage(new ReactiveVariable<float>(50))
+                .AddExplosionRadius(new ReactiveVariable<float>(10))
+                .AddExplosionEntitiesFilteredEvent()
+                
+                .AddAreaContactsCollidersBuffer(new Buffer<Collider>(64))
+                .AddAreaContactsEntitiesBuffer(new Buffer<Entity>(64))
+                .AddAreaContactDamage(new ReactiveVariable<float>(50))
+                .AddAreaContactsDetectingMask(UnityLayersAPI.LayerMaskCharacters)
+
+
+                //.AddAttackProcessInitialTime(new ReactiveVariable<float>(3))
+                //.AddAttackProcessCurrentTime()
+                //.AddInAttackProcess()
+                //.AddStartAttackRequest()
+                //.AddStartAttackEvent()
+                //.AddEndAttackEvent()
+                //.AddAttackDelayTime(new ReactiveVariable<float>(1))
+                //.AddAttackDelayEndEvent()
+                //.AddAttackCanceledEvent()
+                //.AddAttackCooldownInitialTime(new ReactiveVariable<float>(2))
+                //.AddAttackCooldownCurrentTime()
+                //.AddInAttackCooldown()
+
                 .AddTeleportationStartEvent()
                 .AddTeleportationEndEvent()
                 .AddTeleportationStartRequest()
@@ -240,11 +261,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             ICompositeCondition canApplyDamage = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
-            ICompositeCondition canStartAttack = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value == false))
-                .Add(new FuncCondition(() => entity.InAttackProcess.Value == false))
-                .Add(new FuncCondition(() => entity.IsMoving.Value == false))
-                .Add(new FuncCondition(() => entity.InAttackCooldown.Value == false));
+            ICompositeCondition canStartExplosion = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
             ICompositeCondition canStartTeleportation = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false))
@@ -255,15 +273,25 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddMustDie(mustDie)
                 .AddMustSelfRelease(mustSelfRelease)
                 .AddCanApplyDamage(canApplyDamage)
-                .AddCanStartAttack(canStartAttack)
-                .AddTeleportationCanStart(canStartTeleportation);
+                .AddTeleportationCanStart(canStartTeleportation)
+                .AddExplosionCanStart(canStartExplosion);
 
             entity
-                .AddSystem(new StartAttackSystem())
-                .AddSystem(new AttackProcessTimerSystem())
-                .AddSystem(new AttackDelayEndTriggerSystem())
-                .AddSystem(new EndAttackSystem())
-                .AddSystem(new AttackCooldownTimerSystem())
+                //.AddSystem(new StartAttackSystem())
+                //.AddSystem(new AttackProcessTimerSystem())
+                //.AddSystem(new AttackDelayEndTriggerSystem())
+                //.AddSystem(new EndAttackSystem())
+                //.AddSystem(new AttackCooldownTimerSystem())
+
+                .AddSystem(new ExplosionStartSystem())
+                .AddSystem(new ExplosionProcessTimerSystem())
+                .AddSystem(new ExplosionDelayEndTriggerSystem())
+                .AddSystem(new ExplosionEndSystem())
+                .AddSystem(new ExplosionAreaContactsDetectingSystem())
+                .AddSystem(new ExplosionAreaEntitiesFilterSystem(_collidersRegistryService))
+                .AddSystem(new DealDamageOnExplosionAreaContactsSystem())
+
+
                 .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new EnergyRegenerationSystem())
                 .AddSystem(new TeleportationStartSystem())
@@ -293,7 +321,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddIsDead()
                 .AddContactsDetectingMask(UnityLayersAPI.LayerMaskCharacters)
                 .AddContactsCollidersBuffer(new Buffer<Collider>(64))
-                .AddContactsEntiriesBuffer(new Buffer<Entity>(64))
+                .AddContactsEntitiesBuffer(new Buffer<Entity>(64))
                 .AddBodyContactDamage(new ReactiveVariable<float>(damage))
                 .AddDeathMask(UnityLayersAPI.LayerMaskCharacters)
                 .AddIsTouchDeathMask();
