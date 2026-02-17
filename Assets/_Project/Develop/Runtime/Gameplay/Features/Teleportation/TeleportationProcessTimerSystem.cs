@@ -5,7 +5,7 @@ using System;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 {
-    public class TeleportationProcessTimerSystem : IInitializableSystem, IDisposable, IUpdatableSystem
+    public class TeleportationProcessTimerSystem : IInitializableSystem, IDisposableSystem, IUpdatableSystem
     {
         private ReactiveEvent _startEvent;
         private ReactiveVariable<bool> _inProcess;
@@ -24,7 +24,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
             _startEventDisposable = _startEvent.Subscribe(OnStartEvent);
         }
 
-        public void Dispose()
+        public void OnDispose()
         {
             _startEventDisposable.Dispose();
         }

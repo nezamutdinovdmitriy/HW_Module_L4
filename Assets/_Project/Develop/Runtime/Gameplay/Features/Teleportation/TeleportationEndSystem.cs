@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 {
-    public class TeleportationEndSystem : IInitializableSystem, IDisposable
+    public class TeleportationEndSystem : IInitializableSystem, IDisposableSystem
     {
         private ReactiveEvent _endEvent;
 
@@ -31,7 +31,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
             _initialTimeDisposable = _currentTime.Subscribe(OnCurrentTimeChanged);
         }
 
-        public void Dispose()
+        public void OnDispose()
         {
             _initialTimeDisposable.Dispose();
         }

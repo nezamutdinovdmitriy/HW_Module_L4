@@ -159,6 +159,33 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.ContactsEntiriesBuffer() {Value = vV}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.AreaDetectingMask AreaDetectingMaskC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.AreaDetectingMask>();
+
+		public UnityEngine.LayerMask AreaDetectingMask => AreaDetectingMaskC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddAreaDetectingMask(UnityEngine.LayerMask vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.AreaDetectingMask() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.AreaCollidersBuffer AreaCollidersBufferC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.AreaCollidersBuffer>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Optimization.Buffer<UnityEngine.Collider> AreaCollidersBuffer => AreaCollidersBufferC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddAreaCollidersBuffer(Assets._Project.Develop.Runtime.Utilities.Optimization.Buffer<UnityEngine.Collider> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.AreaCollidersBuffer() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.AreaEntiriesBuffer AreaEntiriesBufferC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.AreaEntiriesBuffer>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Optimization.Buffer<Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity> AreaEntiriesBuffer => AreaEntiriesBufferC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddAreaEntiriesBuffer(Assets._Project.Develop.Runtime.Utilities.Optimization.Buffer<Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.AreaEntiriesBuffer() {Value = vV}); 
+		}
+
 		public Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.DeathMask DeathMaskC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Sensors.DeathMask>();
 
 		public UnityEngine.LayerMask DeathMask => DeathMaskC.Value;
@@ -384,6 +411,48 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddDisableCollidersOnDeath(System.Collections.Generic.List<UnityEngine.Collider> vV)
 		{
 			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle.DisableCollidersOnDeath() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaRadius ExplosionAreaRadiusC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaRadius>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> ExplosionAreaRadius => ExplosionAreaRadiusC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionAreaRadius()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaRadius() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionAreaRadius(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaRadius() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaDamage ExplosionAreaDamageC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaDamage>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> ExplosionAreaDamage => ExplosionAreaDamageC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionAreaDamage()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaDamage() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionAreaDamage(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaDamage() {Value = vV}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaEvent ExplosionAreaEventC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaEvent>();
+
+		public Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent ExplosionAreaEvent => ExplosionAreaEventC.Value;
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionAreaEvent()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaEvent() { Value = new Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent() }); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionAreaEvent(Assets._Project.Develop.Runtime.Utilities.Reactive.ReactiveEvent vV)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionTakeDamage.ExplosionAreaEvent() {Value = vV}); 
 		}
 
 		public Assets._Project.Develop.Runtime.Gameplay.Features.Energy.MaxEnergy MaxEnergyC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.Energy.MaxEnergy>();

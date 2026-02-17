@@ -25,6 +25,21 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
         public Buffer<Entity> Value;
     }
 
+    public class AreaDetectingMask : IEntityComponent
+    {
+        public LayerMask Value;
+    }
+
+    public class AreaCollidersBuffer : IEntityComponent
+    {
+        public Buffer<Collider> Value;
+    }
+
+    public class AreaEntiriesBuffer : IEntityComponent
+    {
+        public Buffer<Entity> Value;
+    }
+
     public class DeathMask : IEntityComponent
     {
         public LayerMask Value;

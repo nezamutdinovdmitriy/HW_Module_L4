@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 {
-    public class TeleportationStartSystem : IInitializableSystem, IDisposable
+    public class TeleportationStartSystem : IInitializableSystem, IDisposableSystem
     {
         private ReactiveEvent _startRequest;
         private ReactiveEvent _startEvent;
@@ -45,7 +45,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
             _startRequestDisposable = _startRequest.Subscribe(OnStartRequest);
         }
 
-        public void Dispose()
+        public void OnDispose()
         {
             _startRequestDisposable.Dispose();
         }
