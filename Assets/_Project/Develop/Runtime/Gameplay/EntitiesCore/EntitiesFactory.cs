@@ -287,9 +287,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new ExplosionProcessTimerSystem())
                 .AddSystem(new ExplosionDelayEndTriggerSystem())
                 .AddSystem(new ExplosionEndSystem())
-                .AddSystem(new ExplosionAreaContactsDetectingSystem())
+                .AddSystem(new ExplosionAreaDetectingSystem())
                 .AddSystem(new ExplosionAreaEntitiesFilterSystem(_collidersRegistryService))
-                .AddSystem(new DealDamageOnExplosionAreaContactsSystem())
+                .AddSystem(new DealDamageOnExplosionAreaSystem())
 
 
                 .AddSystem(new ApplyDamageSystem())
