@@ -25,6 +25,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         {
             _entity = _entitiesFactory.CreateHeroAlternative(Vector3.zero);
             _entitiesFactory.CreateGhost(Vector3.zero + Vector3.forward * 5);
+            _entitiesFactory.CreateGhost(Vector3.zero + Vector3.forward * 3);
 
             _isRunning = true;
         }
@@ -36,9 +37,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             if (Input.GetKeyDown(KeyCode.Space))
                 _entity.TeleportationStartRequest.Invoke();
-
-            if (Input.GetKeyDown(KeyCode.R))
-                _entity.ExplosionStartRequest.Invoke();
 
             //Vector3 input = new(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             

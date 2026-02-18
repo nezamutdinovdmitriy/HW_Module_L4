@@ -210,7 +210,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddDeathProcessCurrentTime()
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
-
                 .AddExplosionStartRequest()
                 .AddExplosionStartEvent()
                 .AddExplosionEndEvent()
@@ -222,26 +221,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddExplosionInstantDamage(new ReactiveVariable<float>(50))
                 .AddExplosionRadius(new ReactiveVariable<float>(10))
                 .AddExplosionEntitiesFilteredEvent()
-                
                 .AddAreaContactsCollidersBuffer(new Buffer<Collider>(64))
                 .AddAreaContactsEntitiesBuffer(new Buffer<Entity>(64))
                 .AddAreaContactDamage(new ReactiveVariable<float>(50))
                 .AddAreaContactsDetectingMask(UnityLayersAPI.LayerMaskCharacters)
-
-
-                //.AddAttackProcessInitialTime(new ReactiveVariable<float>(3))
-                //.AddAttackProcessCurrentTime()
-                //.AddInAttackProcess()
-                //.AddStartAttackRequest()
-                //.AddStartAttackEvent()
-                //.AddEndAttackEvent()
-                //.AddAttackDelayTime(new ReactiveVariable<float>(1))
-                //.AddAttackDelayEndEvent()
-                //.AddAttackCanceledEvent()
-                //.AddAttackCooldownInitialTime(new ReactiveVariable<float>(2))
-                //.AddAttackCooldownCurrentTime()
-                //.AddInAttackCooldown()
-
                 .AddTeleportationStartEvent()
                 .AddTeleportationEndEvent()
                 .AddTeleportationStartRequest()
@@ -277,12 +260,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddExplosionCanStart(canStartExplosion);
 
             entity
-                //.AddSystem(new StartAttackSystem())
-                //.AddSystem(new AttackProcessTimerSystem())
-                //.AddSystem(new AttackDelayEndTriggerSystem())
-                //.AddSystem(new EndAttackSystem())
-                //.AddSystem(new AttackCooldownTimerSystem())
-
                 .AddSystem(new ExplosionStartSystem())
                 .AddSystem(new ExplosionProcessTimerSystem())
                 .AddSystem(new ExplosionDelayEndTriggerSystem())
@@ -290,8 +267,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new ExplosionAreaDetectingSystem())
                 .AddSystem(new ExplosionAreaEntitiesFilterSystem(_collidersRegistryService))
                 .AddSystem(new DealDamageOnExplosionAreaSystem())
-
-
+                .AddSystem(new TeleportExplosionAbilitySystem())
                 .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new EnergyRegenerationSystem())
                 .AddSystem(new TeleportationStartSystem())

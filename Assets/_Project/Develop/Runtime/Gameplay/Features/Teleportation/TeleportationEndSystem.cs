@@ -40,12 +40,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
         {
             if(TimerIsDone(currentTime))
             {
+                Debug.Log("Teleportation ended!");
+
                 _transform.gameObject.SetActive(true);
 
                 _inProcess.Value = false;
                 _endEvent?.Invoke();
-
-                Debug.Log("Teleportation ended!");
             }
         }
 
