@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
+using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
 using UnityEngine;
@@ -17,9 +18,17 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateEntitiesLifeContext);
             container.RegisterAsSingle(CreateMonoEntitiesLifeContext);
             container.RegisterAsSingle(CreateCollidersRegistryService);
+            container.RegisterAsSingle(CreateBrainsFactory);
+            container.RegisterAsSingle(CreateAIBrainContext);
 
             container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
         }
+
+        private static AIBrainsContext CreateAIBrainContext(DIContainer container)
+            => new AIBrainsContext();
+
+        private static BrainsFactory CreateBrainsFactory(DIContainer container)
+            => new BrainsFactory(container);
 
         private static CollidersRegistryService CreateCollidersRegistryService(DIContainer container)
             => new CollidersRegistryService();
