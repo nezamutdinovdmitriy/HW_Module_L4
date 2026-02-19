@@ -7,10 +7,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
 {
     public class RandomMovementState : State, IUpdatableState
     {
-        private ReactiveVariable<Vector3> _movementDirection;
-        private ReactiveVariable<Vector3> _rotationDirection;
+        private readonly ReactiveVariable<Vector3> _movementDirection;
+        private readonly ReactiveVariable<Vector3> _rotationDirection;
 
-        private float _cooldownBetweenDirectionGeneration;
+        private readonly float _cooldownBetweenDirectionGeneration;
         private float _time;
 
         public RandomMovementState(Entity entity, float cooldownBetweenDirectionGeneration)
@@ -44,7 +44,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
         {
             _time += deltaTime;
 
-            if(_time >= _cooldownBetweenDirectionGeneration)
+            if (_time >= _cooldownBetweenDirectionGeneration)
             {
                 GenerateNewDirection();
                 _time = 0;

@@ -51,6 +51,18 @@ namespace Assets._Project.Develop.Editor
                     sb.AppendLine($"\t\tpublic {GetValidTypeName(field.FieldType)} {componentName} => {modifiedComponentName}.{field.Name};");
                     sb.AppendLine();
 
+                    // Метод TryGet
+                    sb.AppendLine($"\t\tpublic bool TryGet{componentName}(out {GetValidTypeName(field.FieldType)} {GetVariableNameFrom(field.Name)})");
+                    sb.AppendLine("\t\t{");
+                    sb.AppendLine($"\t\t\tbool result = TryGetComponent(out {fullTypeName} component);");
+                    sb.AppendLine($"\t\t\tif(result)");
+                    sb.AppendLine($"\t\t\t\t{GetVariableNameFrom(field.Name)} = component.{field.Name};");
+                    sb.AppendLine($"\t\t\telse");
+                    sb.AppendLine($"\t\t\t\t{GetVariableNameFrom(field.Name)} = default({GetValidTypeName(field.FieldType)});");
+                    sb.AppendLine($"\t\t\treturn result;");
+                    sb.AppendLine("\t\t}");
+                    sb.AppendLine();
+
                     //метод add если есть одно поле с пустым конструктором
                     if (HasEmptyConstructor(field.FieldType))
                     {
@@ -117,7 +129,7 @@ namespace Assets._Project.Develop.Editor
             return "{" + string.Join(", ", initializers) + "}";
         }
 
-        public static string GetVariableNameFrom(string name) => char.ToLowerInvariant(name[0]) + name[..1];
+        public static string GetVariableNameFrom(string name) => char.ToLowerInvariant(name[0]) + name[1..];
 
         private static bool HasSingleField(Type type, out FieldInfo field)
         {
