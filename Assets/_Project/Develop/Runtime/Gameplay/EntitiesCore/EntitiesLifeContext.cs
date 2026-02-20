@@ -10,6 +10,8 @@ public class EntitiesLifeContext : IDisposable
     private readonly List<Entity> _enities = new();
     private readonly List<Entity> _removeRequests = new();
 
+    public IReadOnlyList<Entity> Enities => _enities;
+
     public void Add(Entity entity)
     {
         _enities.Add(entity);

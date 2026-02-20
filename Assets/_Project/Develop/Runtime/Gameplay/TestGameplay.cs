@@ -1,5 +1,6 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
+using Assets._Project.Develop.Runtime.Gameplay.Features.AI.States;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         {
             _entity = _entitiesFactory.CreateHero(Vector3.zero);
             _entity.AddCurrentTarget();
-            _brainsFactory.CreateMainHeroBrain(_entity);
+            _brainsFactory.CreateMainHeroBrain(_entity, new NearestDamageableTargetSelector(_entity));
 
             _ghost = _entitiesFactory.CreateGhost(Vector3.zero + Vector3.forward * 5);
 
