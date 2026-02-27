@@ -10,7 +10,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 {
     public class TeleportationStartSystem : IInitializableSystem, IDisposable
     {
-        private ReactiveEvent _startRequest;
+        private ReactiveEvent<Vector3> _startRequest;
         private ReactiveEvent _startEvent;
 
         private ReactiveVariable<bool> _inProcess;
@@ -21,8 +21,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 
         private ReactiveVariable<float> _cost;
         private ReactiveVariable<float> _currentEnergy;
-
-        private ReactiveVariable<float> _radius;
 
         private Transform _transform;
 
@@ -40,8 +38,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 
             _transform = entity.Transform;
 
-            _radius = entity.TeleportationRadiusArea;
-
             _startRequestDisposable = _startRequest.Subscribe(OnStartRequest);
         }
 
@@ -50,7 +46,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
             _startRequestDisposable.Dispose();
         }
 
-        private void OnStartRequest()
+        private void OnStartRequest(Vector3 position)
         {
             if (_canStart.Evaluate())
             {
@@ -61,8 +57,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 
                 _transform.gameObject.SetActive(false);
 
-                Vector2 randomPoint = Random.insideUnitCircle * _radius.Value;
-                _transform.position = _transform.position + new Vector3(randomPoint.x, 0f, randomPoint.y);
+                _transform.position = _transform.position + new Vector3(position.x, 0f, position.y);
 
                 Debug.Log("Teleportation started");
             }

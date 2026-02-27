@@ -45,7 +45,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
                 return;
 
             if (Input.GetKeyDown(KeyCode.Space))
-                _entity.TeleportationStartRequest.Invoke();
+                //_entity.TeleportationStartRequest.Invoke();
 
             if (Input.GetKeyDown(KeyCode.I))
                 _brainsFactory.CreateGhostBrain(_ghost);
