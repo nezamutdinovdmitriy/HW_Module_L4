@@ -33,7 +33,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             _entity.AddCurrentTarget();
             _brainsFactory.CreateMainHeroBrain(_entity, new NearestDamageableTargetSelector(_entity));
 
-            _ghost = _entitiesFactory.CreateGhost(Vector3.zero + Vector3.forward * 5);
+            _ghost = _entitiesFactory.CreateTeleportationGhost(Vector3.zero + Vector3.forward * 5);
+            _brainsFactory.CreateEnemyRandomTeleportationBrain(_ghost);
 
             _isRunning = true;
         }

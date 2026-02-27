@@ -3,6 +3,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.AI.States;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
+using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using Assets._Project.Develop.Runtime.Utilities.Timer;
 using System;
@@ -27,6 +28,40 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             _brainsContext = container.Resolve<AIBrainsContext>();
             _inputInputService = container.Resolve<IInputService>();
             _entitiesLifeContext = container.Resolve<EntitiesLifeContext>();
+        }
+
+        public StateMachineBrain CreateEnemyRandomTeleportationBrain(Entity entity)
+        {
+            List<IDisposable> disposables = new();
+
+            TimerService timerBetweenTeleportation = _timerServiceFactory.Create(5f);
+
+            AIStateMachine teleportation = new AIStateMachine(disposables);
+
+            EmptyState empty = new();
+            RandomTeleportationState randomTeleportationState = new(entity);
+
+            disposables.Add(timerBetweenTeleportation);
+            disposables.Add(randomTeleportationState.Entered.Subscribe(timerBetweenTeleportation.Restart));
+
+            ICompositeCondition fromEmptyToTeleportationCondition = new CompositeCondition()
+                .Add(new FuncCondition(() => timerBetweenTeleportation.IsOver))
+                .Add(entity.TeleportationCanStart);
+
+            ICompositeCondition fromTeleportationToEmptyCondition = new CompositeCondition()
+                .Add(new FuncCondition(() => timerBetweenTeleportation.IsOver == false));
+
+            teleportation.AddState(empty);
+            teleportation.AddState(randomTeleportationState);
+
+            teleportation.AddTransition(empty, randomTeleportationState, fromEmptyToTeleportationCondition);
+            teleportation.AddTransition(randomTeleportationState, empty, fromTeleportationToEmptyCondition);
+
+            StateMachineBrain brain = new(teleportation);
+
+            _brainsContext.SetFor(entity, brain);
+
+            return brain;
         }
 
         public StateMachineBrain CreateMainHeroBrain(Entity entity, ITargetSelector targetSelector)

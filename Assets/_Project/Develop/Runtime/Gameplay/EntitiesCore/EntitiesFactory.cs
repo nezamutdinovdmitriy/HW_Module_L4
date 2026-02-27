@@ -12,7 +12,6 @@ using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.Optimization;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
@@ -92,6 +91,93 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new BodyContactsEntitiesFilterSystem(_collidersRegistryService))
                 .AddSystem(new DealDamageOnContactSystem())
                 .AddSystem(new ApplyDamageSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DisableCollidersOnDeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
+        public Entity CreateTeleportationGhost(Vector3 position)
+        {
+            Entity entity = CreateEmpty();
+            MonoEntity monoEntity = _monoEntitiesFactory.Create(entity, position, "Entities/Characters/Ghost");
+
+            entity
+                .AddMoveDirection()
+                .AddRotationDirection()
+                .AddMoveSpeed(new ReactiveVariable<float>(7))
+                .AddIsMoving()
+                .AddRotationSpeed(new ReactiveVariable<float>(850))
+                .AddMaxHealth(new ReactiveVariable<float>(100))
+                .AddCurrentHealth(new ReactiveVariable<float>(100))
+                .AddMaxEnergy(new ReactiveVariable<float>(100))
+                .AddCurrentEnergy(new ReactiveVariable<float>(100))
+                .AddEnergyRegenTickInterval(new ReactiveVariable<float>(5))
+                .AddEnergyRegenCurrentTime(new ReactiveVariable<float>(5))
+                .AddEnergyRegenValuePerTick(new ReactiveVariable<float>(15))
+                .AddIsDead()
+                .AddInDeathProcess()
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+                .AddDeathProcessCurrentTime()
+                .AddTakeDamageRequest()
+                .AddTakeDamageEvent()
+                .AddContactsDetectingMask(UnityLayersAPI.LayerMaskCharacters)
+                .AddContactsCollidersBuffer(new Buffer<Collider>(64))
+                .AddContactsEntitiesBuffer(new Buffer<Entity>(64))
+                .AddBodyContactDamage(new ReactiveVariable<float>(50))
+                .AddTeleportationStartEvent()
+                .AddTeleportationEndEvent()
+                .AddTeleportationStartRequest()
+                .AddTeleportationInProcess()
+                .AddTeleportationCost(new ReactiveVariable<float>(50))
+                .AddTeleportationInitialTime(new ReactiveVariable<float>(2))
+                .AddTeleportationCurrentTime()
+                .AddTeleportationRadiusArea(new ReactiveVariable<float>(3)); ;
+
+            ICompositeCondition canMove = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition canRotate = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition canStartTeleportation = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false))
+                .Add(new FuncCondition(() => entity.TeleportationInProcess.Value == false))
+                .Add(new FuncCondition(() => entity.CurrentEnergy.Value >= entity.TeleportationCost.Value));
+
+            entity
+                .AddCanMove(canMove)
+                .AddCanRotate(canRotate)
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage)
+                .AddTeleportationCanStart(canStartTeleportation);
+
+            entity
+                .AddSystem(new RigidbodyMovementSystem())
+                .AddSystem(new RigidbodyRotationSystem())
+                .AddSystem(new BodyContactsDetectingSystem())
+                .AddSystem(new BodyContactsEntitiesFilterSystem(_collidersRegistryService))
+                .AddSystem(new DealDamageOnContactSystem())
+                .AddSystem(new ApplyDamageSystem())
+                .AddSystem(new EnergyRegenerationSystem())
+                .AddSystem(new TeleportationStartSystem())
+                .AddSystem(new TeleportationProcessTimerSystem())
+                .AddSystem(new TeleportationEndSystem())
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DisableCollidersOnDeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())
