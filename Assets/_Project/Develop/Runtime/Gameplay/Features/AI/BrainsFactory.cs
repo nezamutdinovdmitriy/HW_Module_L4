@@ -39,7 +39,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             SmartTeleportState smartTeleportationState = new(entity);
 
             disposables.Add(timerBetweenTeleportation);
-            disposables.Add(smartTeleportationState.Entered.Subscribe(timerBetweenTeleportation.Restart));
+            disposables.Add(entity.TeleportationEndEvent.Subscribe(timerBetweenTeleportation.Restart));
 
             AIStateMachine behaviour = new(disposables);
 
