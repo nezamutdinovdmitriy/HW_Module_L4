@@ -29,6 +29,19 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             _entitiesLifeContext = container.Resolve<EntitiesLifeContext>();
         }
 
+        public StateMachineBrain CreateMainHeroBrain2(Entity entity)
+        {
+            PlayerInputMovementState movementState = new(entity, _inputInputService);
+
+            AIStateMachine behaviour = new();
+            behaviour.AddState(movementState);
+
+            StateMachineBrain brain = new(behaviour);
+            _brainsContext.SetFor(entity, brain);
+
+            return brain;
+        }
+
         public StateMachineBrain CreateEnemySmartTeleportationBrain(Entity entity, ITargetSelector targetSelector)
         {
             List<IDisposable> disposables = new();

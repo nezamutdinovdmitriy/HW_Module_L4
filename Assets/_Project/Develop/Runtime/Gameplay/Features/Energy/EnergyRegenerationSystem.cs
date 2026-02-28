@@ -26,7 +26,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Energy
 
         public void OnUpdate(float deltaTime)
         {
-            if (_currentEnergy.Value == _maxEnergy.Value)
+            if (_currentEnergy.Value >= _maxEnergy.Value)
                 return;
 
             _energyRegenCurrentTime.Value -= deltaTime;
