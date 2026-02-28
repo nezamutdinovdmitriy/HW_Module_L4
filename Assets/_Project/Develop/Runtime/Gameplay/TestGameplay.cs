@@ -29,9 +29,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         
         public void Run()
         {
-            _entity = _entitiesFactory.CreateHero(Vector3.zero);
-            _entity.AddCurrentTarget();
-            _brainsFactory.CreateMainHeroBrain(_entity, new NearestDamageableTargetSelector(_entity));
+            //_entity = _entitiesFactory.CreateHeroAlternative(Vector3.zero);
+            //_entity.AddCurrentTarget();
+            //_brainsFactory.CreateMainHeroBrain(_entity, new NearestDamageableTargetSelector(_entity));
 
             _ghost = _entitiesFactory.CreateTeleportationGhost(Vector3.zero + Vector3.forward * 5);
             _brainsFactory.CreateEnemyRandomTeleportationBrain(_ghost);

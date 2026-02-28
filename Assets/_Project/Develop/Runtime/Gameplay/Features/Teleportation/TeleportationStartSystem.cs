@@ -61,7 +61,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 
                 _transform.gameObject.SetActive(false);
 
-                _transform.position = _transform.position + new Vector3(position.x, 0f, position.y);
+                if (IsInside(position))
+                {
+                    _transform.position += new Vector3(position.x, 0f, position.y);
+                    Debug.Log(IsInside(position));
+                }
+                else
+                {
+                    Vector3 direciton = (position - _transform.position).normalized;
+
+                    _transform.position += direciton * _radius.Value;
+                    Debug.Log(IsInside(position));
+                }
 
                 Debug.Log("Teleportation started");
             }
@@ -70,5 +81,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
                 Debug.Log("Don't teleportation");
             }
         }
+
+        private bool IsInside(Vector3 position) => (position - _transform.position).magnitude <= _radius.Value;
     }
 }

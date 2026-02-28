@@ -136,7 +136,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddTeleportationCost(new ReactiveVariable<float>(50))
                 .AddTeleportationInitialTime(new ReactiveVariable<float>(2))
                 .AddTeleportationCurrentTime()
-                .AddTeleportationRadiusArea(new ReactiveVariable<float>(3)); ;
+                .AddTeleportationRadiusArea(new ReactiveVariable<float>(10));
 
             ICompositeCondition canMove = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));

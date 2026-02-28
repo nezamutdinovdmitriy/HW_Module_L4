@@ -38,7 +38,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             AIStateMachine teleportation = new AIStateMachine(disposables);
 
             EmptyState empty = new();
-            RandomTeleportationState randomTeleportationState = new(entity, 5f);
+            RandomTeleportationState randomTeleportationState = new(entity, 3f);
 
             disposables.Add(timerBetweenTeleportation);
             disposables.Add(randomTeleportationState.Entered.Subscribe(timerBetweenTeleportation.Restart));
