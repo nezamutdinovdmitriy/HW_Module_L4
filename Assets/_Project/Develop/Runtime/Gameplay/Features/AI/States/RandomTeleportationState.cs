@@ -8,12 +8,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
     public class RandomTeleportationState : State, IUpdatableState
     {
         private readonly ReactiveEvent<Vector3> _teleportationStartRequest;
-        private readonly float _teleportationRadius;
+        private readonly ReactiveVariable<float> _teleportationRadius;
 
-        public RandomTeleportationState(Entity entity, float radius)
+        public RandomTeleportationState(Entity entity)
         {
             _teleportationStartRequest = entity.TeleportationStartRequest;
-            _teleportationRadius = radius;
+            _teleportationRadius = entity.TeleportationRadiusArea;
         }
 
         public override void Enter()
@@ -31,7 +31,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
         {
             Vector2 randomDirection = Random.insideUnitCircle.normalized;
 
-            Vector3 newPosition = new Vector3(randomDirection.x, 0, randomDirection.y) * _teleportationRadius;
+            Vector3 newPosition = new Vector3(randomDirection.x, 0, randomDirection.y) * _teleportationRadius.Value;
 
             return newPosition;
         }

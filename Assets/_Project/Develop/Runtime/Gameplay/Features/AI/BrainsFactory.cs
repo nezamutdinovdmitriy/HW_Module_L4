@@ -29,16 +29,52 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             _entitiesLifeContext = container.Resolve<EntitiesLifeContext>();
         }
 
+        public StateMachineBrain CreateEnemySmartTeleportationBrain(Entity entity, ITargetSelector targetSelector)
+        {
+            List<IDisposable> disposables = new();
+
+            TimerService timerBetweenTeleportation = _timerServiceFactory.Create(5f);
+
+            FindTargetState findTargetState = new(targetSelector, _entitiesLifeContext, entity);
+            SmartTeleportState smartTeleportationState = new(entity);
+
+            disposables.Add(timerBetweenTeleportation);
+            disposables.Add(smartTeleportationState.Entered.Subscribe(timerBetweenTeleportation.Restart));
+
+            AIStateMachine behaviour = new(disposables);
+
+            behaviour.AddState(findTargetState);
+            behaviour.AddState(smartTeleportationState);
+
+            ICompositeCondition fromFindTargetToSmartTeleportation = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentEnergy.Value / entity.MaxEnergy.Value * 100f >= 40))
+                .Add(entity.TeleportationCanStart)
+                .Add(new FuncCondition(() => entity.CurrentTarget.Value != null))
+                .Add(new FuncCondition(() => timerBetweenTeleportation.IsOver));
+
+            ICompositeCondition fromSmartTeleportationToFindTarget = new CompositeCondition()
+                .Add(new FuncCondition(() => timerBetweenTeleportation.IsOver == false));
+
+            behaviour.AddTransition(findTargetState, smartTeleportationState, fromFindTargetToSmartTeleportation);
+            behaviour.AddTransition(smartTeleportationState, findTargetState, fromSmartTeleportationToFindTarget);
+
+            StateMachineBrain brain = new(behaviour);
+
+            _brainsContext.SetFor(entity, brain);
+
+            return brain;
+        }
+
         public StateMachineBrain CreateEnemyRandomTeleportationBrain(Entity entity)
         {
             List<IDisposable> disposables = new();
 
             TimerService timerBetweenTeleportation = _timerServiceFactory.Create(5f);
 
-            AIStateMachine teleportation = new AIStateMachine(disposables);
+            AIStateMachine teleportation = new(disposables);
 
             EmptyState empty = new();
-            RandomTeleportationState randomTeleportationState = new(entity, 3f);
+            RandomTeleportationState randomTeleportationState = new(entity);
 
             disposables.Add(timerBetweenTeleportation);
             disposables.Add(randomTeleportationState.Entered.Subscribe(timerBetweenTeleportation.Restart));

@@ -64,21 +64,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
                 if (IsInside(position))
                 {
                     _transform.position += new Vector3(position.x, 0f, position.y);
-                    Debug.Log(IsInside(position));
                 }
                 else
                 {
                     Vector3 direciton = (position - _transform.position).normalized;
 
                     _transform.position += direciton * _radius.Value;
-                    Debug.Log(IsInside(position));
                 }
-
-                Debug.Log("Teleportation started");
-            }
-            else
-            {
-                Debug.Log("Don't teleportation");
             }
         }
 

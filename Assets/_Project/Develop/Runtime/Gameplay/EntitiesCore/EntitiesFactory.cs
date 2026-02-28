@@ -133,10 +133,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddTeleportationEndEvent()
                 .AddTeleportationStartRequest()
                 .AddTeleportationInProcess()
-                .AddTeleportationCost(new ReactiveVariable<float>(50))
+                .AddTeleportationCost(new ReactiveVariable<float>(25))
                 .AddTeleportationInitialTime(new ReactiveVariable<float>(2))
                 .AddTeleportationCurrentTime()
-                .AddTeleportationRadiusArea(new ReactiveVariable<float>(10));
+                .AddTeleportationRadiusArea(new ReactiveVariable<float>(5));
 
             ICompositeCondition canMove = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -310,15 +310,15 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddAreaContactsCollidersBuffer(new Buffer<Collider>(64))
                 .AddAreaContactsEntitiesBuffer(new Buffer<Entity>(64))
                 .AddAreaContactDamage(new ReactiveVariable<float>(50))
-                .AddAreaContactsDetectingMask(UnityLayersAPI.LayerMaskCharacters);
-                //.AddTeleportationStartEvent()
-                //.AddTeleportationEndEvent()
-                //.AddTeleportationStartRequest()
-                //.AddTeleportationInProcess()
-                //.AddTeleportationCost(new ReactiveVariable<float>(50))
-                //.AddTeleportationInitialTime(new ReactiveVariable<float>(2))
-                //.AddTeleportationCurrentTime()
-                //.AddTeleportationRadiusArea(new ReactiveVariable<float>(3));
+                .AddAreaContactsDetectingMask(UnityLayersAPI.LayerMaskCharacters)
+                .AddTeleportationStartEvent()
+                .AddTeleportationEndEvent()
+                .AddTeleportationStartRequest()
+                .AddTeleportationInProcess()
+                .AddTeleportationCost(new ReactiveVariable<float>(50))
+                .AddTeleportationInitialTime(new ReactiveVariable<float>(2))
+                .AddTeleportationCurrentTime()
+                .AddTeleportationRadiusArea(new ReactiveVariable<float>(3));
 
             ICompositeCondition mustDie = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
