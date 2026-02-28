@@ -22,6 +22,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
         private ReactiveVariable<float> _cost;
         private ReactiveVariable<float> _currentEnergy;
 
+        private ReactiveVariable<float> _radius;
+
         private Transform _transform;
 
         public void OnInit(Entity entity)
@@ -35,6 +37,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 
             _cost = entity.TeleportationCost;
             _currentEnergy = entity.CurrentEnergy;
+
+            _radius = entity.TeleportationRadiusArea;
 
             _transform = entity.Transform;
 
