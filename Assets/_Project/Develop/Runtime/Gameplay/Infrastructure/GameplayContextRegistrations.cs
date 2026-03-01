@@ -24,6 +24,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle<IInputService>(CreateDesktopInput);
 
             container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
+            container.RegisterAsSingle(CreateScreenToWorldPositionConverter).NonLazy();
+        }
+
+        private static ScreenToWorldPositionConverter CreateScreenToWorldPositionConverter(DIContainer container)
+        {
+            //Camera camera = container.Resolve<Camera>();
+            return new ScreenToWorldPositionConverter(Camera.main);
         }
 
         private static DesktopInput CreateDesktopInput(DIContainer container)

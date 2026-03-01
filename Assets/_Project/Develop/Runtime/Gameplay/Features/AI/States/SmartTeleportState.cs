@@ -19,6 +19,8 @@ public class SmartTeleportState : State, IUpdatableState
         base.Enter();
 
         _teleportaionStartRequest?.Invoke(_currentTarget.Value.Transform.position);
+
+        Debug.Log(_currentTarget.Value.Transform.position);
     }
 
     public void Update(float deltaTime)

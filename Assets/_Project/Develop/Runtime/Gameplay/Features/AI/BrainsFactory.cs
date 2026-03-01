@@ -32,9 +32,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
         public StateMachineBrain CreateMainHeroBrain2(Entity entity)
         {
             PlayerInputMovementState movementState = new(entity, _inputInputService);
+            AimingState aimingState = new(entity, _container.Resolve<ScreenToWorldPositionConverter>(), _inputInputService);
 
             AIStateMachine behaviour = new();
-            behaviour.AddState(movementState);
+            behaviour.AddState(aimingState);
 
             StateMachineBrain brain = new(behaviour);
             _brainsContext.SetFor(entity, brain);
@@ -122,11 +123,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
 
             ICompositeCondition fromMovementToCombatCondition = new CompositeCondition()
                 .Add(new FuncCondition(() => currentTarget.Value != null))
-                .Add(new FuncCondition(() => _inputInputService.Direciton == Vector3.zero));
+                .Add(new FuncCondition(() => _inputInputService.MoveDireciton == Vector3.zero));
 
             ICompositeCondition fromCombatToMovementCondition = new CompositeCondition(LogicOperations.Or)
                 .Add(new FuncCondition(() => currentTarget.Value == null))
-                .Add(new FuncCondition(() => _inputInputService.Direciton != Vector3.zero));
+                .Add(new FuncCondition(() => _inputInputService.MoveDireciton != Vector3.zero));
 
             AIStateMachine behaviour = new();
 

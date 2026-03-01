@@ -21,6 +21,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
 
         public void OnFixedUpdate(float deltaTime)
         {
+            if (_body.gameObject.activeSelf == false)
+                return;
+
             _contacts.Count = Physics.OverlapCapsuleNonAlloc(
                 _body.bounds.min,
                 _body.bounds.max,

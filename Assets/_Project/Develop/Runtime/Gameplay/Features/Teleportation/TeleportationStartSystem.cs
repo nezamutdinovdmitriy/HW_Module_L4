@@ -4,7 +4,6 @@ using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 {
@@ -19,9 +18,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 
         private IDisposable _startRequestDisposable;
 
-        private ReactiveVariable<float> _cost;
-        private ReactiveVariable<float> _currentEnergy;
-
         private ReactiveVariable<float> _radius;
 
         private Transform _transform;
@@ -34,9 +30,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
             _inProcess = entity.TeleportationInProcess;
 
             _canStart = entity.TeleportationCanStart;
-
-            _cost = entity.TeleportationCost;
-            _currentEnergy = entity.CurrentEnergy;
 
             _radius = entity.TeleportationRadiusArea;
 
@@ -54,8 +47,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
         {
             if (_canStart.Evaluate())
             {
-                _currentEnergy.Value -= _cost.Value;
-
                 _inProcess.Value = true;
                 _startEvent?.Invoke();
 
@@ -63,13 +54,16 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Teleportation
 
                 if (IsInside(position))
                 {
-                    _transform.position += new Vector3(position.x, 0f, position.y);
+                    _transform.position = position;
+                    Debug.Log("Target Inside area");
                 }
                 else
                 {
                     Vector3 direciton = (position - _transform.position).normalized;
 
                     _transform.position += direciton * _radius.Value;
+
+                    Debug.Log("Target Outside area");
                 }
             }
         }

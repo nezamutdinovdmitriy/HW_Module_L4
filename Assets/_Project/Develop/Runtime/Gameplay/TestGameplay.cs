@@ -1,6 +1,7 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI.States;
+using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using UnityEngine;
 
@@ -24,13 +25,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             _entitiesFactory = container.Resolve<EntitiesFactory>();
             _brainsFactory = container.Resolve<BrainsFactory>();
-
         }
         
         public void Run()
         {
             _entity = _entitiesFactory.CreateHeroAlternative2(Vector3.zero);
+            _entity.AddCurrentTarget();
             _brainsFactory.CreateMainHeroBrain2(_entity);
+            //_brainsFactory.CreateMainHeroBrain(_entity, new LowestHealthTargetSelector(_entity));
 
             _ghost = _entitiesFactory.CreateTeleportationGhost(Vector3.zero + Vector3.forward * 5);
             _ghost.AddCurrentTarget();
@@ -43,12 +45,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         {
             if (_isRunning == false)
                 return;
-
-            if (Input.GetKeyDown(KeyCode.Space))
-                //_entity.TeleportationStartRequest.Invoke();
-
-            if (Input.GetKeyDown(KeyCode.I))
-                _brainsFactory.CreateGhostBrain(_ghost);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
         {
         }
 
-        private Vector3 GetPosition()
+        private Vector3 GetPosition() 
         {
             Vector2 randomDirection = Random.insideUnitCircle.normalized;
 
