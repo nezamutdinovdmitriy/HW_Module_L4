@@ -32,10 +32,39 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
         public StateMachineBrain CreateMainHeroBrain2(Entity entity)
         {
             PlayerInputMovementState movementState = new(entity, _inputInputService);
+            
             AimingState aimingState = new(entity, _container.Resolve<ScreenToWorldPositionConverter>(), _inputInputService);
+            AttackTriggerState shootingState = new(entity);
+
+            ICondition canAttack = entity.CanStartAttack;
+
+            ICompositeCondition fromAimingToShooting = new CompositeCondition()
+                .Add(canAttack)
+                .Add(new FuncCondition(() => _inputInputService.IsShooting));
+            ICompositeCondition fromShootingToAiming = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.InAttackProcess.Value == false));
+
+            AIStateMachine combatState = new();
+            
+            combatState.AddState(aimingState);
+            combatState.AddState(shootingState);
+
+            combatState.AddTransition(aimingState, shootingState, fromAimingToShooting);
+            combatState.AddTransition(shootingState, aimingState, fromShootingToAiming);
+
+            ICompositeCondition fromMovementToCombat = new CompositeCondition()
+                .Add(new FuncCondition(() => _inputInputService.MoveDireciton == Vector3.zero));
+
+            ICompositeCondition fromCombatToMovement = new CompositeCondition()
+                .Add(new FuncCondition(() => _inputInputService.MoveDireciton != Vector3.zero));
 
             AIStateMachine behaviour = new();
-            behaviour.AddState(aimingState);
+            behaviour.AddState(movementState);
+            behaviour.AddState(combatState);
+
+            behaviour.AddTransition(movementState, combatState, fromMovementToCombat);
+            behaviour.AddTransition(combatState, movementState, fromCombatToMovement);
+
 
             StateMachineBrain brain = new(behaviour);
             _brainsContext.SetFor(entity, brain);

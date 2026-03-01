@@ -30,9 +30,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         public void Run()
         {
             _entity = _entitiesFactory.CreateHeroAlternative2(Vector3.zero);
-            _entity.AddCurrentTarget();
             _brainsFactory.CreateMainHeroBrain2(_entity);
-            //_brainsFactory.CreateMainHeroBrain(_entity, new LowestHealthTargetSelector(_entity));
 
             _ghost = _entitiesFactory.CreateTeleportationGhost(Vector3.zero + Vector3.forward * 5);
             _ghost.AddCurrentTarget();
