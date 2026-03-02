@@ -30,7 +30,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature
                 if(IsEnabled == false)
                     return false;
 
-                return Input.GetKey(FireKey);
+                return Input.GetKeyDown(FireKey);
             }
         }
     }

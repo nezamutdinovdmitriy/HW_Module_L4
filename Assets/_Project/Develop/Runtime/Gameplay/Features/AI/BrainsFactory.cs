@@ -29,7 +29,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             _entitiesLifeContext = container.Resolve<EntitiesLifeContext>();
         }
 
-        public StateMachineBrain CreateMainHeroBrain2(Entity entity)
+        public StateMachineBrain CreateMainHeroHandleBrain(Entity entity)
         {
             PlayerInputMovementState movementState = new(entity, _inputInputService);
             
