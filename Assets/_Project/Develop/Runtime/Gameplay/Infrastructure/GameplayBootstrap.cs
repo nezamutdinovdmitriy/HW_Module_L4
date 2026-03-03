@@ -1,4 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
+using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
+using Assets._Project.Develop.Runtime.Gameplay.States;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
@@ -17,8 +19,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
         private WalletService _walletService;
 
-        [SerializeField] private TestGameplay _testGameplay;
-
+        private GameplayStatesContext _gameplayStatesContext;
         private EntitiesLifeContext _entitiesLifeContext;
         private AIBrainsContext _brainsContext;
 
@@ -42,10 +43,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
             _walletService = _container.Resolve<WalletService>();
 
-            _testGameplay.Initialize(_container);
-
+            _gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
             _brainsContext = _container.Resolve<AIBrainsContext>();
+
+            _container.Resolve<MainHeroFactory>().Create(Vector3.zero);
 
             yield break;
         }
@@ -54,34 +56,20 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
         {
             Debug.Log("Старт геймплейной сцены");
 
-            _testGameplay.Run();
+            _gameplayStatesContext.Run();
         }
 
         private void Update()
         {
             _brainsContext?.Update(Time.deltaTime);
             _entitiesLifeContext?.Update(Time.deltaTime);
+            _gameplayStatesContext?.Update(Time.deltaTime);
 
             if (Input.GetKeyDown(KeyCode.F))
             {
                 SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
                 ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
                 coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                _walletService.Add(CurrencyTypes.Gold, 10);
-                Debug.Log("Золота осталось: " + _walletService.GetCurrency(CurrencyTypes.Gold).Value);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                if (_walletService.Enough(CurrencyTypes.Gold, 10))
-                {
-                    _walletService.Spend(CurrencyTypes.Gold, 10);
-                    Debug.Log("Золота осталось: " + _walletService.GetCurrency(CurrencyTypes.Gold).Value);
-                }
             }
         }
 

@@ -1,5 +1,9 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
+using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
+using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
+using Assets._Project.Develop.Runtime.Utilities.Conditions;
+using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +20,19 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
 
         public Entity SelectTargetFrom(IEnumerable<Entity> targets)
         {
-            IEnumerable<Entity> selectedTargets = targets.Where(target => target.HasComponent<CurrentHealth>() && target != _source);
+            IEnumerable<Entity> selectedTargets = targets.Where(target =>
+            {
+                bool result = target.HasComponent<CurrentHealth>() && target.HasComponent<TakeDamageRequest>() && target != _source;
+
+                if (target.TryGetCanApplyDamage(out ICompositeCondition canApplyDamage))
+                    result = result && canApplyDamage.Evaluate();
+
+                if (_source.TryGetTeam(out ReactiveVariable<TeamType> sourceTeam)
+                && target.TryGetTeam(out ReactiveVariable<TeamType> targetTeam))
+                    result = result && sourceTeam.Value != targetTeam.Value;
+
+                return result;
+            });
 
             if (selectedTargets.Any() == false)
                 return null;
