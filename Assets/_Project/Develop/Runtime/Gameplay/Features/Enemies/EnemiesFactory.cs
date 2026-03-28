@@ -41,7 +41,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Enemies
                         .AddCurrentTarget()
                         .AddTeam(new ReactiveVariable<TeamType>(TeamType.Enemies));
 
-                    _brainsFactory.CreateEnemySmartTeleportationBrain(entity, new LowestHealthTargetSelector(entity));
+                    _brainsFactory.CreateGhostBrain(entity);
                     break;
 
                 default:
