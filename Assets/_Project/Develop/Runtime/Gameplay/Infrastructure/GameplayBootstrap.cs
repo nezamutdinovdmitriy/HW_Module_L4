@@ -17,8 +17,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
         private DIContainer _container;
         private GameplayInputArgs _inputArgs;
 
-        private WalletService _walletService;
-
         private GameplayStatesContext _gameplayStatesContext;
         private EntitiesLifeContext _entitiesLifeContext;
         private AIBrainsContext _brainsContext;
@@ -40,8 +38,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             Debug.Log($"Вы попали на уровень {_inputArgs.LevelNumber}");
 
             Debug.Log("Инициализация геймплейной сцены");
-
-            _walletService = _container.Resolve<WalletService>();
 
             _gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();

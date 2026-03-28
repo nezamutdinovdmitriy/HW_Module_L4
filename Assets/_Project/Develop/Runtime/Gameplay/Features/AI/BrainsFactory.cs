@@ -16,7 +16,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
         private readonly DIContainer _container;
         private readonly TimerServiceFactory _timerServiceFactory;
         private readonly AIBrainsContext _brainsContext;
-        private readonly IInputService _inputInputService;
+        private readonly IInputService _inputService;
         private readonly EntitiesLifeContext _entitiesLifeContext;
 
         public BrainsFactory(DIContainer container)
@@ -25,22 +25,22 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
 
             _timerServiceFactory = container.Resolve<TimerServiceFactory>();
             _brainsContext = container.Resolve<AIBrainsContext>();
-            _inputInputService = container.Resolve<IInputService>();
+            _inputService = container.Resolve<IInputService>();
             _entitiesLifeContext = container.Resolve<EntitiesLifeContext>();
         }
 
         public StateMachineBrain CreateMainHeroHandleBrain(Entity entity)
         {
-            PlayerInputMovementState movementState = new(entity, _inputInputService);
+            PlayerInputMovementState movementState = new(entity, _inputService);
             
-            AimingState aimingState = new(entity, _container.Resolve<ScreenToWorldPositionConverter>(), _inputInputService);
+            AimingState aimingState = new(entity, _container.Resolve<ScreenToWorldPositionConverter>(), _inputService);
             AttackTriggerState shootingState = new(entity);
 
             ICondition canAttack = entity.CanStartAttack;
 
             ICompositeCondition fromAimingToShooting = new CompositeCondition()
                 .Add(canAttack)
-                .Add(new FuncCondition(() => _inputInputService.IsShooting));
+                .Add(new FuncCondition(() => _inputService.IsShooting));
             ICompositeCondition fromShootingToAiming = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.InAttackProcess.Value == false));
 
@@ -53,10 +53,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             combatState.AddTransition(shootingState, aimingState, fromShootingToAiming);
 
             ICompositeCondition fromMovementToCombat = new CompositeCondition()
-                .Add(new FuncCondition(() => _inputInputService.MoveDireciton == Vector3.zero));
+                .Add(new FuncCondition(() => _inputService.MoveDireciton == Vector3.zero));
 
             ICompositeCondition fromCombatToMovement = new CompositeCondition()
-                .Add(new FuncCondition(() => _inputInputService.MoveDireciton != Vector3.zero));
+                .Add(new FuncCondition(() => _inputService.MoveDireciton != Vector3.zero));
 
             AIStateMachine behaviour = new();
             behaviour.AddState(movementState);
@@ -146,17 +146,17 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
         {
             AIStateMachine combatState = CreateAutoAttackStateMachine(entity);
 
-            PlayerInputMovementState movementState = new(entity, _inputInputService);
+            PlayerInputMovementState movementState = new(entity, _inputService);
 
             ReactiveVariable<Entity> currentTarget = entity.CurrentTarget;
 
             ICompositeCondition fromMovementToCombatCondition = new CompositeCondition()
                 .Add(new FuncCondition(() => currentTarget.Value != null))
-                .Add(new FuncCondition(() => _inputInputService.MoveDireciton == Vector3.zero));
+                .Add(new FuncCondition(() => _inputService.MoveDireciton == Vector3.zero));
 
             ICompositeCondition fromCombatToMovementCondition = new CompositeCondition(LogicOperations.Or)
                 .Add(new FuncCondition(() => currentTarget.Value == null))
-                .Add(new FuncCondition(() => _inputInputService.MoveDireciton != Vector3.zero));
+                .Add(new FuncCondition(() => _inputService.MoveDireciton != Vector3.zero));
 
             AIStateMachine behaviour = new();
 

@@ -21,6 +21,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
 
         public void OnFixedUpdate(float deltaTime)
         {
+            Debug.Log("ACTIVESELF " + _body.gameObject.activeSelf);
+
             if (_body.gameObject.activeSelf == false)
                 return;
 
@@ -33,6 +35,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
                 QueryTriggerInteraction.Ignore);
 
             RemoveSelfFromContacts();
+
+            Debug.Log(_contacts.Count);
         }
 
         private void RemoveSelfFromContacts()
@@ -51,9 +55,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
             if(indexToRemove >= 0)
             {
                 for (int i = indexToRemove; i < _contacts.Count - 1; i++)
-                {
                     _contacts.Items[i] = _contacts.Items[i + 1];
-                }
 
                 _contacts.Count--;
             }
