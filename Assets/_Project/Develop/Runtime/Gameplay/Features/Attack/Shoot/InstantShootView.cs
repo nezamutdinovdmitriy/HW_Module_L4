@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack.Shoot
 {
 
-
+    [RequireComponent(typeof(Animator))]
     public class InstantShootView : MonoEntityView
     {
         [SerializeField] private string _inAttackParameterName;

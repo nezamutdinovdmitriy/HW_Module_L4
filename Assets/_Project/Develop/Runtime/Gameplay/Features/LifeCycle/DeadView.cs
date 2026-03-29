@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle
 {
+    [RequireComponent(typeof(Animator))]
     public class DeadView : MonoEntityView
     {
         [SerializeField] private string _isDeadParameterName;

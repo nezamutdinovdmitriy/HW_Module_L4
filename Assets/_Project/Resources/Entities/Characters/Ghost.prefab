@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8717232184565563579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8717277808501262298}
+  m_Layer: 6
+  m_Name: DamageEffectPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8717277808501262298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8717232184565563579}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.734, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1468602660883868341}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3802402001402675187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67,12 +98,22 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 1054992880016519983, guid: 374cb903b36dd1c4ca2bbf4fab3b4637, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2352389939095278918, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8717277808501262298}
     - targetCorrespondingSourceObject: {fileID: 1325798273516870230, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9083131954758950965}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 374cb903b36dd1c4ca2bbf4fab3b4637, type: 3}
+--- !u!4 &1468602660883868341 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2352389939095278918, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+    type: 3}
+  m_PrefabInstance: {fileID: 3802402001402675187}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2784059064850294181 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1325798273516870230, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
@@ -164,6 +205,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8797038517528046993}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef5210dc7c68592419f623e891afb881,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2653773747185137108}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef5210dc7c68592419f623e891afb881,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6538585506749998045}
   m_SourcePrefab: {fileID: 100100000, guid: ef5210dc7c68592419f623e891afb881, type: 3}
 --- !u!1 &8450464634155596431 stripped
 GameObject:
@@ -197,6 +246,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDeadParameterName: IsDead
+--- !u!114 &2653773747185137108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450464634155596431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed8cdef6a0851942a7eb7792f219359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfxSpawnPoint: {fileID: 8717277808501262298}
+  _vfxPrefab: {fileID: 19862656, guid: bfbeddd8307f4e441aa8ae4537bf45ad, type: 3}
+--- !u!114 &6538585506749998045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450464634155596431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c832ba2ad6f071940be55891ce9ace99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnInProcessParameterName: SpawnInProcess
+  _spawnEffectPrefab: {fileID: 19802486, guid: 8f75fe73ef3ce1e4ab33ff60e0cf9996, type: 3}
 --- !u!4 &9083131954758950965 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ef5210dc7c68592419f623e891afb881,

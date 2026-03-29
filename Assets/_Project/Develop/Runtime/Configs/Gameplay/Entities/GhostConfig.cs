@@ -10,4 +10,5 @@ public class GhostConfig : EntityConfig
     [field: SerializeField, Min(0)] public float MaxEnergy { get; private set; } = 100;
     [field: SerializeField, Min(0)] public float BodyContactDamage { get; private set; } = 50;
     [field: SerializeField, Min(0)] public float DeathProcessTime { get; private set; } = 1;
+    [field: SerializeField, Min(0)] public float SpawnProcessTime { get; private set; } = 2;
 }

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyItems:
   - <SpawnPosition>k__BackingField: {x: -3, y: 0, z: 5}
-    <EnemyConfig>k__BackingField: {fileID: 11400000, guid: 8c9920a689724214fa3d1eae143afb7c,
+    <EnemyConfig>k__BackingField: {fileID: 11400000, guid: 4ae5b4450dc66f54cbe60d32dc692e9d,
       type: 2}
   - <SpawnPosition>k__BackingField: {x: 3, y: 0, z: 5}
-    <EnemyConfig>k__BackingField: {fileID: 11400000, guid: 8c9920a689724214fa3d1eae143afb7c,
+    <EnemyConfig>k__BackingField: {fileID: 11400000, guid: 4ae5b4450dc66f54cbe60d32dc692e9d,
       type: 2}
