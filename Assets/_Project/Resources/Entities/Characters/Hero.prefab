@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero
       objectReference: {fileID: 0}
+    - target: {fileID: 7606742503704553495, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0c9fcb6c20cfd054c8b4e6e85f0796ea, type: 2}
     - target: {fileID: 8873946836025230855, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
         type: 3}
       propertyPath: m_IsActive
