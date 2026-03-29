@@ -1,5 +1,6 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
+using Assets._Project.Develop.Runtime.Gameplay.Features.AI.States;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
@@ -37,9 +38,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
 
             entity
                 .AddIsMainHero()
+                .AddCurrentTarget()
                 .AddTeam(new ReactiveVariable<TeamType>(TeamType.MainHero));
 
-            _brainsFactory.CreateMainHeroHandleBrain(entity);
+            _brainsFactory.CreateMainHeroBrain(entity, new NearestDamageableTargetSelector(entity));
 
             _entitiesLifeContext.Add(entity);
 

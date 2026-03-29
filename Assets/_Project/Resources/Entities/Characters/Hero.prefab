@@ -156,6 +156,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7562751398081468401}
+    - targetCorrespondingSourceObject: {fileID: 1054992880016519983, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1625808746535949347}
   m_SourcePrefab: {fileID: 100100000, guid: 374cb903b36dd1c4ca2bbf4fab3b4637, type: 3}
 --- !u!4 &1468602660883868341 stripped
 Transform:
@@ -242,6 +246,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vfxSpawnPoint: {fileID: 5048561059086734116}
   _vfxPrefab: {fileID: 19840534, guid: 666381b24c234194882b77851e943ef1, type: 3}
+--- !u!114 &1625808746535949347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4206588646505336028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac398d731a6234458c18d6bd6663253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _backlightPrefab: {fileID: 19867586, guid: c82022460ac6d274cb9e2aefc6da9dc9, type: 3}
 --- !u!1001 &6248137543044142478
 PrefabInstance:
   m_ObjectHideFlags: 0
