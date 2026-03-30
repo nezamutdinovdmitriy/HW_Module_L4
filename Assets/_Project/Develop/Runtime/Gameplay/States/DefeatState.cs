@@ -1,6 +1,5 @@
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
-using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
-using Assets._Project.Develop.Runtime.Utilities.SceneManagment;
+using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilities.StateMachineCore;
 using UnityEngine;
 
@@ -8,16 +7,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
 {
     public class DefeatState : EndGameState, IUpdatableState
     {
-        private readonly SceneSwitcherService _sceneSwitcherService;
-        private readonly ICoroutinesPerformer _coroutinesPerformer;
+        private readonly GameplayPopupService _gameplayPopupService;
 
         public DefeatState(
             IInputService inputService,
-            SceneSwitcherService sceneSwitcherService,
-            ICoroutinesPerformer coroutinesPerformer) : base(inputService)
+            GameplayPopupService gameplayPopupService) : base(inputService)
         {
-            _sceneSwitcherService = sceneSwitcherService;
-            _coroutinesPerformer = coroutinesPerformer;
+            _gameplayPopupService = gameplayPopupService;
         }
 
         public override void Enter()
@@ -25,12 +21,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
             base.Enter();
 
             Debug.Log("Defeat");
+
+            _gameplayPopupService.OpenDefeatPopup();
         }
 
         public void Update(float deltaTime)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-                _coroutinesPerformer.StartPerform(_sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));
         }
     }
 }

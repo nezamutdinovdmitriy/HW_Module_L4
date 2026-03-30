@@ -4,6 +4,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression;
+using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilities.DataManagment.DataProviders;
@@ -24,13 +25,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
                 _container.Resolve<LevelsProgressionService>(),
                 inputArgs,
                 _container.Resolve<PlayerDataProvider>(),
-                _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>());
-        
+                _container.Resolve<ICoroutinesPerformer>(),
+                _container.Resolve<GameplayPopupService>());
+
         public DefeatState CreateDefeatState() => new(
                 _container.Resolve<IInputService>(),
-                _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>());
+                _container.Resolve<GameplayPopupService>());
 
         public GameplayStateMachine CreateGameplayStateMachine(GameplayInputArgs inputArgs)
         {
@@ -80,7 +80,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
                 .Add(new FuncCondition(() => preperationTriggerService.HasMainHeroContact.Value))
                 .Add(new FuncCondition(() => stageProviderService.HasNextStage()));
 
-            FuncCondition fromStageProcessToPreperationCondition = new(() 
+            FuncCondition fromStageProcessToPreperationCondition = new(()
                 => stageProviderService.CurrentStageResult.Value == StageResult.Completed);
 
             GameplayStateMachine coreLoopState = new GameplayStateMachine();

@@ -8,7 +8,7 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 {
     public abstract class PopupService : IDisposable
     {
-        protected readonly ViewsFactory ViewsFactory;
+        protected readonly ViewsFactory _viewsFactory;
 
         private readonly ProjectPresentersFactory _presentersFactory;
 
@@ -18,7 +18,7 @@ namespace Assets._Project.Develop.Runtime.UI.Core
             ViewsFactory viewsFactory, 
             ProjectPresentersFactory presentersFactory)
         {
-            ViewsFactory = viewsFactory;
+            _viewsFactory = viewsFactory;
             _presentersFactory = presentersFactory;
         }
 
@@ -26,7 +26,7 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
         public TestPopupPresenter OpenTestPopup(Action closedCallback = null)
         {
-            TestPopupView view = ViewsFactory.Create<TestPopupView>(ViewIDs.TestPopup, PopupLayer);
+            TestPopupView view = _viewsFactory.Create<TestPopupView>(ViewIDs.TestPopup, PopupLayer);
 
             TestPopupPresenter popup = _presentersFactory.CreateTestPopupPresenter(view);
 
@@ -37,7 +37,7 @@ namespace Assets._Project.Develop.Runtime.UI.Core
 
         public LevelsMenuPopupPresenter OpenLevelsMenuPopup()
         {
-            LevelsMenuPopupView view = ViewsFactory.Create<LevelsMenuPopupView>(ViewIDs.LevelsMenuPopup, PopupLayer);
+            LevelsMenuPopupView view = _viewsFactory.Create<LevelsMenuPopupView>(ViewIDs.LevelsMenuPopup, PopupLayer);
 
             LevelsMenuPopupPresenter popup = _presentersFactory.CreateLevelsMenuPopupPresenter(view);
 
@@ -87,7 +87,7 @@ namespace Assets._Project.Develop.Runtime.UI.Core
         private void DisposeFor(PopupPresenterBase popup)
         {
             popup.Dispose();
-            ViewsFactory.Release(_presenterToInfo[popup].View);
+            _viewsFactory.Release(_presenterToInfo[popup].View);
         }
 
         private class PopupInfo
