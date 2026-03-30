@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3350216554158135331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4472166635247428533}
+  m_Layer: 0
+  m_Name: HealthBarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4472166635247428533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3350216554158135331}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.009, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1468602660883868341}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7283229442812174982
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,11 +162,19 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5048561059086734116}
+    - targetCorrespondingSourceObject: {fileID: 2352389939095278918, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4472166635247428533}
     - targetCorrespondingSourceObject: {fileID: 1414787670115193270, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
         type: 3}
       insertIndex: 0
       addedObject: {fileID: 5574810280329460459}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5461905459800566021, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+        type: 3}
+      insertIndex: 7
+      addedObject: {fileID: -7548799115393769127}
     - targetCorrespondingSourceObject: {fileID: 1054992880016519983, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
         type: 3}
       insertIndex: -1
@@ -259,6 +298,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backlightPrefab: {fileID: 19867586, guid: c82022460ac6d274cb9e2aefc6da9dc9, type: 3}
+--- !u!1 &9153652462538381046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5461905459800566021, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+    type: 3}
+  m_PrefabInstance: {fileID: 3802402001402675187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7548799115393769127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9153652462538381046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df431b741b77f8c459c88adb593b0d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _point: {fileID: 4472166635247428533}
 --- !u!1001 &6248137543044142478
 PrefabInstance:
   m_ObjectHideFlags: 0

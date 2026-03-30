@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3100697706871047163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7345425263785441219}
+  m_Layer: 0
+  m_Name: HealthBarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7345425263785441219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100697706871047163}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.601, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1468602660883868341}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8717232184565563579
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,11 +138,19 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8717277808501262298}
+    - targetCorrespondingSourceObject: {fileID: 2352389939095278918, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7345425263785441219}
     - targetCorrespondingSourceObject: {fileID: 1325798273516870230, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9083131954758950965}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5461905459800566021, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+        type: 3}
+      insertIndex: 7
+      addedObject: {fileID: 3029448589715261959}
   m_SourcePrefab: {fileID: 100100000, guid: 374cb903b36dd1c4ca2bbf4fab3b4637, type: 3}
 --- !u!4 &1468602660883868341 stripped
 Transform:
@@ -125,6 +164,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3802402001402675187}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9153652462538381046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5461905459800566021, guid: 374cb903b36dd1c4ca2bbf4fab3b4637,
+    type: 3}
+  m_PrefabInstance: {fileID: 3802402001402675187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3029448589715261959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9153652462538381046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df431b741b77f8c459c88adb593b0d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _point: {fileID: 7345425263785441219}
 --- !u!1001 &8757105568614008798
 PrefabInstance:
   m_ObjectHideFlags: 0

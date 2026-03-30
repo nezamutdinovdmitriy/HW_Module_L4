@@ -4,6 +4,7 @@ using Assets._Project.Develop.Runtime.Gameplay.States;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
+using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagment;
 using System;
@@ -20,6 +21,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
         private GameplayStatesContext _gameplayStatesContext;
         private EntitiesLifeContext _entitiesLifeContext;
         private AIBrainsContext _brainsContext;
+
+        private GameplayScreenPresenter _gameplayScreenPresenter;
 
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -42,6 +45,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             _gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
             _brainsContext = _container.Resolve<AIBrainsContext>();
+
+            _gameplayScreenPresenter = _container.Resolve<GameplayScreenPresenter>();
 
             _container.Resolve<MainHeroFactory>().Create(Vector3.zero);
 
@@ -72,6 +77,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
         private void FixedUpdate()
         {
             _entitiesLifeContext?.FixedUpdate(Time.fixedDeltaTime);
+        }
+
+        private void LateUpdate()
+        {
+            _gameplayScreenPresenter?.LateUpdate();
         }
     }
 }
