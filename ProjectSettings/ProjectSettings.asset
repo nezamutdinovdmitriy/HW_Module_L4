@@ -927,11 +927,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 4a15d730-99ee-4a69-b00c-c0c75aa639bd
+  cloudProjectId: 01cae868-f63b-4c08-babc-25ace5cc97e0
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: CourseGameVideo
-  organizationId: wizard2332
+  projectName: HW_L7_TowerDefence
+  organizationId: nezamutdinovdmitriy
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
