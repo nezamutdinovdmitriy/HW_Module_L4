@@ -17,7 +17,7 @@ namespace Assets._Project.Develop.Editor
 
         private static void OnPlayModeStateChanged(PlayModeStateChange state)
         {
-            if(state == PlayModeStateChange.ExitingPlayMode)
+            if(state == PlayModeStateChange.ExitingEditMode)
             {
                 if(EditorPrefs.GetBool(PlayFromBootstrapKey) == false)
                 {

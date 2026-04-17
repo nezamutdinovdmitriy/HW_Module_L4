@@ -1,6 +1,6 @@
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.StatsFeature
 {
-    public enum StatsType
+    public enum StatType
     {
         MoveSpeed = 1,
         MaxHealth = 2,

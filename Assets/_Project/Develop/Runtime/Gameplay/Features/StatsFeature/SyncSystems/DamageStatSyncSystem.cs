@@ -8,7 +8,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.StatsFeature.SyncSys
     public class DamageStatSyncSystem : IInitializableSystem, IUpdatableSystem
     {
         private ReactiveVariable<float> _damage;
-        private Dictionary<StatsType, float> _modifiedStats;
+        private Dictionary<StatType, float> _modifiedStats;
 
         public void OnInit(Entity entity)
         {
@@ -18,7 +18,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.StatsFeature.SyncSys
 
         public void OnUpdate(float deltaTime)
         {
-            float tempValue = _modifiedStats[StatsType.Damage];
+            float tempValue = _modifiedStats[StatType.Damage];
 
             if (tempValue < 0)
                 tempValue = 0;

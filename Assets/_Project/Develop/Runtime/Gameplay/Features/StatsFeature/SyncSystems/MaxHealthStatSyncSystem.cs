@@ -9,7 +9,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.StatsFeature.SyncSys
     {
         private ReactiveVariable<float> _maxHealth;
         private ReactiveVariable<float> _currentHealth;
-        private Dictionary<StatsType, float> _modifiedStats;
+        private Dictionary<StatType, float> _modifiedStats;
 
         public void OnInit(Entity entity)
         {
@@ -20,7 +20,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.StatsFeature.SyncSys
 
         public void OnUpdate(float deltaTime)
         {
-            float tempValue = _modifiedStats[StatsType.MaxHealth];
+            float tempValue = _modifiedStats[StatType.MaxHealth];
 
             float previousRatio = _currentHealth.Value / _maxHealth.Value;
 

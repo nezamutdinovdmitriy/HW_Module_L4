@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c12bd09143925df43bf62bdfb24ac1d8, type: 3}
+  m_Name: IncreaseMoveSpeed
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: MoveSpeed
+  <Name>k__BackingField: Speed+
+  <Discription>k__BackingField: Increase move speed
+  <Icon>k__BackingField: {fileID: 21300000, guid: d2ab1434f478047d5ba5b776083aaf98,
+    type: 3}
+  <StatType>k__BackingField: 1
+  _operation: 1
+  _value: 1.2

@@ -1,10 +1,12 @@
-﻿using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
+﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
+using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Gameplay.States;
 using Assets._Project.Develop.Runtime.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
+using Assets._Project.Develop.Runtime.Utilities.AssetsManagment;
 using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagment;
 using System;
@@ -23,6 +25,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
         private AIBrainsContext _brainsContext;
 
         private GameplayScreenPresenter _gameplayScreenPresenter;
+
+        private MainHeroHolderService _mainHeroHolderService;
+
+        private ResourcesAssetsLoader _resourcesAssetsLoader;
 
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -50,12 +56,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
             _container.Resolve<MainHeroFactory>().Create(Vector3.zero);
 
+            _mainHeroHolderService = _container.Resolve<MainHeroHolderService>();
+
+            _resourcesAssetsLoader = _container.Resolve<ResourcesAssetsLoader>();
+
             yield break;
         }
 
         public override void Run()
         {
             Debug.Log("Старт геймплейной сцены");
+
+            _resourcesAssetsLoader.Load<MonoEntity>("Entities/Projectile");
 
             _gameplayStatesContext.Run();
         }
@@ -72,6 +84,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
                 ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
                 coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));
             }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+                _mainHeroHolderService.MainHero.Experience.Value += 500;
         }
 
         private void FixedUpdate()

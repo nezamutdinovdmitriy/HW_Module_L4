@@ -1,6 +1,9 @@
+using Assets._Project.Develop.Runtime.Configs.Gameplay.LevelUp;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
+using Assets._Project.Develop.Runtime.Gameplay.Features.AbilitiesFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI.States;
+using Assets._Project.Develop.Runtime.Gameplay.Features.LevelUpFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
@@ -33,19 +36,26 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
         public Entity Create(Vector3 position)
         {
             HeroConfig config = _configProviderService.GetConfig<HeroConfig>();
-            
+
             Entity entity = _entitiesFactory.CreateHeroAlternative2(position, config);
 
             entity
                 .AddIsMainHero()
+                .AddAbilities()
                 .AddCurrentTarget()
-                .AddTeam(new ReactiveVariable<TeamType>(TeamType.MainHero));
+                .AddTeam(new ReactiveVariable<TeamType>(TeamType.MainHero))
+                .AddLevel(new ReactiveVariable<int>(1))
+                .AddExperience();
+
+            entity
+                .AddSystem(new AbilityOnAddActivatorSystem())
+                .AddSystem(new LevelUpSystem(_configProviderService.GetConfig<ExperienceForUpgradeLevelConfig>()));
 
             _brainsFactory.CreateMainHeroBrain(entity, new NearestDamageableTargetSelector(entity));
 
             _entitiesLifeContext.Add(entity);
 
-            return entity; 
+            return entity;
         }
     }
 }

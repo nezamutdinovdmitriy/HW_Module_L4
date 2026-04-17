@@ -140,26 +140,29 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             Entity entity = CreateEmpty();
             MonoEntity monoEntity = _monoEntitiesFactory.Create(entity, position, "Entities/Characters/Hero");
 
-            Dictionary<StatsType, float> baseStats = new()
+            Dictionary<StatType, float> baseStats = new()
             {
-                {StatsType.MoveSpeed, config.MoveSpeed},
-                {StatsType.MaxHealth, config.MaxHealth},
-                {StatsType.Damage, config.InstantAttackDamage},
+                {StatType.MoveSpeed, config.MoveSpeed},
+                {StatType.MaxHealth, config.MaxHealth},
+                {StatType.Damage, config.InstantAttackDamage},
             };
 
-            Dictionary<StatsType, float> modifiedStats = new(baseStats);
+            Dictionary<StatType, float> modifiedStats = new(baseStats);
+
+            StatsEffectsList statsEffectsList = new();
+            statsEffectsList.Add(new StatsEffect(StatType.Damage, stat => stat * 2));
 
             entity
-                .AddStatsEffects()
+                .AddStatsEffects(statsEffectsList)
                 .AddBaseStats(baseStats)
                 .AddModifiedStats(modifiedStats)
                 .AddMoveDirection()
                 .AddRotationDirection()
-                .AddMoveSpeed(new ReactiveVariable<float>(baseStats[StatsType.MoveSpeed]))
+                .AddMoveSpeed(new ReactiveVariable<float>(baseStats[StatType.MoveSpeed]))
                 .AddIsMoving()
                 .AddRotationSpeed(new ReactiveVariable<float>(config.RotationSpeed))
-                .AddMaxHealth(new ReactiveVariable<float>(baseStats[StatsType.MaxHealth]))
-                .AddCurrentHealth(new ReactiveVariable<float>(baseStats[StatsType.MaxHealth]))
+                .AddMaxHealth(new ReactiveVariable<float>(baseStats[StatType.MaxHealth]))
+                .AddCurrentHealth(new ReactiveVariable<float>(baseStats[StatType.MaxHealth]))
                 .AddIsDead()
                 .AddInDeathProcess()
                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
@@ -174,7 +177,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddEndAttackEvent()
                 .AddAttackDelayTime(new ReactiveVariable<float>(config.AttackDelayTime))
                 .AddAttackDelayEndEvent()
-                .AddInstantAttackDamage(new ReactiveVariable<float>(baseStats[StatsType.Damage]))
+                .AddInstantAttackDamage(new ReactiveVariable<float>(baseStats[StatType.Damage]))
                 .AddAttackCanceledEvent()
                 .AddAttackCooldownInitialTime(new ReactiveVariable<float>(config.AttackCooldown))
                 .AddAttackCooldownCurrentTime()
@@ -216,6 +219,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddMustCancelAttack(mustCancelAttack);
 
             entity
+                .AddSystem(new StatEffectsApplierSystem())
                 .AddSystem(new MoveSpeedStatSyncSystem())
                 .AddSystem(new MaxHealthStatSyncSystem())
                 .AddSystem(new DamageStatSyncSystem())

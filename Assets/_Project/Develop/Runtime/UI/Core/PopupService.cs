@@ -75,7 +75,7 @@ namespace Assets._Project.Develop.Runtime.UI.Core
             PopupViewBase view,
             Action closedCallback = null)
         {
-            PopupInfo popupInfo = new PopupInfo(view, closedCallback);
+            PopupInfo popupInfo = new(view, closedCallback);
 
             _presenterToInfo.Add(popup, popupInfo);
             popup.Initialize();
