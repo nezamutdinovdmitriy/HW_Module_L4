@@ -1,5 +1,6 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
+using Assets._Project.Develop.Runtime.Gameplay.Features.PauseFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.UI.Gameplay.AbilitySelectPopup;
@@ -20,6 +21,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.LevelUpFeature
         private readonly Queue<int> _levelUpRequests = new();
         private readonly List<IDisposable> _disposables = new();
 
+        private readonly IPauseService _pauseService;
+
         private AbilitySelectPopupPresenter _popup;
         private Coroutine _selectAbilityProcess;
 
@@ -27,11 +30,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.LevelUpFeature
         public DropAbilityOnMainHeroLevelUpService(
             MainHeroHolderService mainHeroHolder,
             GameplayPopupService popupService,
-            ICoroutinesPerformer performer)
+            ICoroutinesPerformer performer,
+            IPauseService pauseService)
         {
             _mainHeroHolder = mainHeroHolder;
             _popupService = popupService;
             _performer = performer;
+            _pauseService = pauseService;
         }
 
         private bool PopupIsOpened => _popup != null;
@@ -64,8 +69,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.LevelUpFeature
             {
                 int level = _levelUpRequests.Dequeue();
 
-                _popup = _popupService.OpenAbilitySelectPopup(_mainHeroHolder.MainHero, () =>
+                _pauseService.Pause();
+
+                _popup = _popupService.OpenAbilitySelectPopup(
+                    _mainHeroHolder.MainHero,
+                    level,
+                    () =>
                 {
+                    _pauseService.Unpause();
                     _popup = null;
                 });
 

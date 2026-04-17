@@ -1,16 +1,20 @@
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Abilities;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.LevelUp;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AbilitiesDroppingFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AbilitiesFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.UI.CommonViews;
 using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.UI.Gameplay.AbilitySelectPopup;
+using Assets._Project.Develop.Runtime.UI.Gameplay.Experience;
 using Assets._Project.Develop.Runtime.UI.Gameplay.HealthDisplay;
 using Assets._Project.Develop.Runtime.UI.Gameplay.ResultsPopups;
 using Assets._Project.Develop.Runtime.UI.Gameplay.Stages;
+using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilities.SceneManagment;
 
@@ -27,16 +31,24 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
             _gameplayInputArgs = gameplayInputArgs;
         }
 
+        public MainHeroExperiencePresenter CreateMainHeroExperiencePresenter(BarWithText view)
+            => new(
+                view,
+                _container.Resolve<MainHeroHolderService>(),
+                _container.Resolve<ConfigsProviderService>().GetConfig<ExperienceForUpgradeLevelConfig>());
+
         public AbilitySelectPopupPresenter CreateAbilitySelectPopupPresenter(
             AbilitySelectPopupView view,
-            Entity entity)
+            Entity entity,
+            int level)
             => new(
                 _container.Resolve<ICoroutinesPerformer>(),
                 view,
                 entity,
                 this,
                 _container.Resolve<AbilityDropService>(),
-                _container.Resolve<ViewsFactory>());
+                _container.Resolve<ViewsFactory>(),
+                level);
 
         public SelectableAbilityPresenter CreateSelectableAbilityPresenter(
             AbilityConfig config,

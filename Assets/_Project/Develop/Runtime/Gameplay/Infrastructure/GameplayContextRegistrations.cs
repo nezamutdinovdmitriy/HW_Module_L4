@@ -9,6 +9,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.Enemies;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LevelUpFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
+using Assets._Project.Develop.Runtime.Gameplay.Features.PauseFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using Assets._Project.Develop.Runtime.Gameplay.States;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
@@ -64,14 +65,20 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateAbilityDroppingRulesService);
             container.RegisterAsSingle(CreateAbilityDropService);
 
+            container.RegisterAsSingle<IPauseService>(CreateTimeScalePauseService);
+
             container.RegisterAsSingle(CreateDropAbilityOnMainHeroLevelUpService).NonLazy();
         }
+
+        private static TimeScalePauseService CreateTimeScalePauseService(DIContainer container)
+            => new();
 
         private static DropAbilityOnMainHeroLevelUpService CreateDropAbilityOnMainHeroLevelUpService(DIContainer container)
             => new(
                 container.Resolve<MainHeroHolderService>(),
                 container.Resolve<GameplayPopupService>(),
-                container.Resolve<ICoroutinesPerformer>());
+                container.Resolve<ICoroutinesPerformer>(),
+                container.Resolve<IPauseService>());
 
         private static AbilityDroppingRulesService CreateAbilityDroppingRulesService(DIContainer container)
             => new();
