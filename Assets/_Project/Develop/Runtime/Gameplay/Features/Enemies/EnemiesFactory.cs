@@ -1,9 +1,9 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
-using Assets._Project.Develop.Runtime.Gameplay.Features.AI.States;
+using Assets._Project.Develop.Runtime.Gameplay.Features.LootFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
-using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
+using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
 using System;
 using UnityEngine;
@@ -19,6 +19,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Enemies
 
         private readonly EntitiesLifeContext _entitiesLifeContext;
 
+        private readonly DropLootService _dropLootService;
+
         public EnemiesFactory(DIContainer container)
         {
             _container = container;
@@ -26,6 +28,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Enemies
             _entitiesFactory = container.Resolve<EntitiesFactory>();
             _brainsFactory = container.Resolve<BrainsFactory>();
             _entitiesLifeContext = container.Resolve<EntitiesLifeContext>();
+            _dropLootService = container.Resolve<DropLootService>();
         }
 
         public Entity Create(Vector3 position, EntityConfig config)
@@ -41,6 +44,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Enemies
                         .AddCurrentTarget()
                         .AddTeam(new ReactiveVariable<TeamType>(TeamType.Enemies));
 
+                    AddDropLootBehaviourTo(entity);
+
                     _brainsFactory.CreateGhostBrain(entity);
                     break;
 
@@ -53,5 +58,19 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Enemies
             return entity;
         }
 
+        private void AddDropLootBehaviourTo(Entity entity)
+        {
+            ICompositeCondition dropLootCondition = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value))
+                .Add(new FuncCondition(() => entity.LootIsDropped.Value == false));
+
+            entity
+                .AddLootIsDropped()
+                .AddCanDropLoot(dropLootCondition);
+
+            entity.MustSelfRelease.Add(new FuncCondition(() => entity.LootIsDropped.Value));
+
+            entity.AddSystem(new DropLootSystem(_dropLootService));
+        }
     }
 }

@@ -45,7 +45,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
                 .AddCurrentTarget()
                 .AddTeam(new ReactiveVariable<TeamType>(TeamType.MainHero))
                 .AddLevel(new ReactiveVariable<int>(1))
-                .AddExperience();
+                .AddExperience()
+                .AddCoins();
 
             entity
                 .AddSystem(new AbilityOnAddActivatorSystem())

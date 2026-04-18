@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.Configs.Gameplay.Abilities;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Levels;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Loot;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AbilitiesDroppingFeature;
@@ -8,6 +9,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Enemies;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LevelUpFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.LootFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Gameplay.Features.PauseFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
@@ -68,7 +70,22 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle<IPauseService>(CreateTimeScalePauseService);
 
             container.RegisterAsSingle(CreateDropAbilityOnMainHeroLevelUpService).NonLazy();
+
+            container.RegisterAsSingle(CreateLootFactory);
+            container.RegisterAsSingle(CreateDropLootService);
+            container.RegisterAsSingle(CreateLootPullingService).NonLazy();
         }
+
+        private static LootPullingService CreateLootPullingService(DIContainer container)
+            => new(container.Resolve<EntitiesLifeContext>());
+
+        private static DropLootService CreateDropLootService(DIContainer container)
+            => new(
+                container.Resolve<ConfigsProviderService>().GetConfig<LootListConfig>(),
+                container.Resolve<LootFactory>());
+
+        private static LootFactory CreateLootFactory(DIContainer container)
+            => new(container);
 
         private static TimeScalePauseService CreateTimeScalePauseService(DIContainer container)
             => new();

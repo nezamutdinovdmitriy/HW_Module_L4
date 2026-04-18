@@ -1,4 +1,5 @@
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.LootFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Gameplay.Features.PauseFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
@@ -18,6 +19,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
         private readonly DIContainer _container;
 
         public GameplayStatesFactory(DIContainer container) => _container = container;
+
+        public CollectLootState CreateCollectLootState()
+            => new(
+                _container.Resolve<LootPullingService>(),
+                _container.Resolve<MainHeroHolderService>());
 
         public PreperationState CreatePreperationState() => new(_container.Resolve<PreperationTriggerService>());
         public StageProcessState CreateStageProcessState() => new(_container.Resolve<StageProviderService>());
@@ -75,7 +81,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
         {
             PreperationTriggerService preperationTriggerService = _container.Resolve<PreperationTriggerService>();
             StageProviderService stageProviderService = _container.Resolve<StageProviderService>();
+            LootPullingService lootPullingService = _container.Resolve<LootPullingService>();
 
+            CollectLootState collectLootState = CreateCollectLootState();
             PreperationState preperationState = CreatePreperationState();
             StageProcessState stageProcessState = CreateStageProcessState();
 
@@ -83,16 +91,21 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
                 .Add(new FuncCondition(() => preperationTriggerService.HasMainHeroContact.Value))
                 .Add(new FuncCondition(() => stageProviderService.HasNextStage()));
 
-            FuncCondition fromStageProcessToPreperationCondition = new(()
+            FuncCondition fromStageProcessToCollectLootCondition = new(()
                 => stageProviderService.CurrentStageResult.Value == StageResult.Completed);
+
+            FuncCondition fromCollectLootToPreperationCondition = new(()
+                => lootPullingService.AllCollected.Value);
 
             GameplayStateMachine coreLoopState = new GameplayStateMachine();
 
+            coreLoopState.AddState(collectLootState);
             coreLoopState.AddState(preperationState);
             coreLoopState.AddState(stageProcessState);
 
             coreLoopState.AddTransition(preperationState, stageProcessState, fromPreperationToStageProcessCondition);
-            coreLoopState.AddTransition(stageProcessState, preperationState, fromStageProcessToPreperationCondition);
+            coreLoopState.AddTransition(stageProcessState, collectLootState, fromStageProcessToCollectLootCondition);
+            coreLoopState.AddTransition(collectLootState, preperationState, fromCollectLootToPreperationCondition);
 
             return coreLoopState;
         }
