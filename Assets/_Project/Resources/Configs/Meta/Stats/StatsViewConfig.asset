@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe1d649799442e4683048d04f343ff5, type: 3}
+  m_Name: StatsViewConfig
+  m_EditorClassIdentifier: 
+  _statShowData:
+  - <Type>k__BackingField: 1
+    <Name>k__BackingField: MS
+    <Sprite>k__BackingField: {fileID: 21300000, guid: d2ab1434f478047d5ba5b776083aaf98,
+      type: 3}
+  - <Type>k__BackingField: 2
+    <Name>k__BackingField: HP
+    <Sprite>k__BackingField: {fileID: 21300000, guid: c072af160809046cd867ca5b6dcc92fc,
+      type: 3}
+  - <Type>k__BackingField: 3
+    <Name>k__BackingField: DMG
+    <Sprite>k__BackingField: {fileID: 21300000, guid: ac8fb516c2eac49aea78689eb3305ef2,
+      type: 3}

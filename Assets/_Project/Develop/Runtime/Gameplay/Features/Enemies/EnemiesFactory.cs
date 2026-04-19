@@ -38,7 +38,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Enemies
             switch (config)
             {
                 case GhostConfig ghostConfig:
-                    entity = _entitiesFactory.CreateTeleportationGhost(position, ghostConfig);
+                    entity = _entitiesFactory.CreateGhost(position, ghostConfig);
 
                     entity
                         .AddCurrentTarget()

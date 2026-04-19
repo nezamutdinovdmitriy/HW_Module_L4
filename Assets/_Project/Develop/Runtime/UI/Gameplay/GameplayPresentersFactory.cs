@@ -70,7 +70,11 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
                 _gameplayInputArgs);
 
         public GameplayScreenPresenter CreateGameplayScreenPresenter(GameplayScreenView view)
-            => new(view, _container.Resolve<GameplayPresentersFactory>());
+            => new(
+                view, 
+                _container.Resolve<GameplayPresentersFactory>(),
+                _container.Resolve<ProjectPresentersFactory>(),
+                _container.Resolve<MainHeroHolderService>());
 
         public StagePresenter CreateStagePresenter(IconTextView view)
             => new(view, _container.Resolve<StageProviderService>());

@@ -3,9 +3,10 @@
     "Gold": 200,
     "Diamond": 25
   },
-  "CompletedLevels": [
-    1,
-    2,
-    3
-  ]
+  "CompletedLevels": [],
+  "StatsUpgradeLevel": {
+    "MoveSpeed": 1,
+    "MaxHealth": 4,
+    "Damage": 1
+  }
 }

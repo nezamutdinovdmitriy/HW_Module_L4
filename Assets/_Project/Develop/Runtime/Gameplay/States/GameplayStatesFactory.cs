@@ -6,6 +6,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Infrastructure;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilities.Conditions;
 using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
@@ -34,7 +35,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
                 _container.Resolve<PlayerDataProvider>(),
                 _container.Resolve<ICoroutinesPerformer>(),
                 _container.Resolve<GameplayPopupService>(),
-                _container.Resolve<IPauseService>());
+                _container.Resolve<IPauseService>(),
+                _container.Resolve<WalletService>(),
+                _container.Resolve<MainHeroHolderService>());
 
         public DefeatState CreateDefeatState() => new(
                 _container.Resolve<IInputService>(),

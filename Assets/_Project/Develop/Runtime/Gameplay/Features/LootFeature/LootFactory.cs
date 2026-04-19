@@ -86,7 +86,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.LootFeature
                 .AddIsMoving()
                 .AddIsCollected()
                 .AddCanMove(moveCondition)
-                .AddMustSelfRelease(moveCondition)
+                .AddMustSelfRelease(mustSelfRelease)
                 .AddSystem(new GenerateMoveDirectionToTargetSystem())
                 .AddSystem(new RigidbodyMovementSystem())
                 .AddSystem(new CollectedOnNearToTargetSystem(collectDistance))

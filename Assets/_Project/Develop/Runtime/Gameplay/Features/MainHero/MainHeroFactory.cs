@@ -4,10 +4,14 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.AbilitiesFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI.States;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LevelUpFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.StatsFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Meta.Features.StatsUpgrade;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilities.Reactive;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
@@ -23,6 +27,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
 
         private readonly ConfigsProviderService _configProviderService;
 
+        private readonly StatsUpgradeService _statsUpgradeService;
+
         public MainHeroFactory(DIContainer container)
         {
             _container = container;
@@ -31,13 +37,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
             _brainsFactory = container.Resolve<BrainsFactory>();
             _entitiesLifeContext = container.Resolve<EntitiesLifeContext>();
             _configProviderService = container.Resolve<ConfigsProviderService>();
+            _statsUpgradeService = container.Resolve<StatsUpgradeService>();
         }
 
         public Entity Create(Vector3 position)
         {
             HeroConfig config = _configProviderService.GetConfig<HeroConfig>();
 
-            Entity entity = _entitiesFactory.CreateHeroAlternative2(position, config);
+            Entity entity = _entitiesFactory.CreateHero(position, config, GetStats());
 
             entity
                 .AddIsMainHero()
@@ -57,6 +64,16 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
             _entitiesLifeContext.Add(entity);
 
             return entity;
+        }
+
+        private Dictionary<StatType, float> GetStats()
+        {
+            Dictionary<StatType, float> stats = new();
+
+            foreach (StatType statType in Enum.GetValues(typeof(StatType)))
+                stats.Add(statType, _statsUpgradeService.GetCurrentStatValueFor(statType));
+
+            return stats;
         }
     }
 }

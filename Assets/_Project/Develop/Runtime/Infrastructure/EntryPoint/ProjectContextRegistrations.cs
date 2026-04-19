@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression;
+using Assets._Project.Develop.Runtime.Meta.Features.StatsUpgrade;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.UI;
 using Assets._Project.Develop.Runtime.UI.Core;
@@ -50,8 +51,15 @@ namespace Assets._Project.Develop.Runtime.Infrastructure.EntryPoint
 
             container.RegisterAsSingle<ISaveLoadSerivce>(CreateSaveLoadService);
 
+            container.RegisterAsSingle(CreateStatsUpgradeService).NonLazy();
+
             container.RegisterAsSingle(CreateLevelsProgressionService).NonLazy();
         }
+
+        private static StatsUpgradeService CreateStatsUpgradeService(DIContainer c)
+            => new(
+                c.Resolve<PlayerDataProvider>(),
+                c.Resolve<ConfigsProviderService>());
 
         private static TimerServiceFactory CreateTimerService(DIContainer c)
             => new TimerServiceFactory(c);
