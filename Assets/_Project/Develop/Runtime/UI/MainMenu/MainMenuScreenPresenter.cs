@@ -29,6 +29,7 @@ namespace Assets._Project.Develop.Runtime.UI.MainMenu
         public void Initialize()
         {
             _screen.OpenLevelsMenuButtonClicked += OnOpenLevelsMenuButtonClicked;
+            _screen.OpenUpgradeMenuButtonClicked += OnOpenUpgradeMenuButtonClicked;
 
             CreateWallet();
 
@@ -39,6 +40,7 @@ namespace Assets._Project.Develop.Runtime.UI.MainMenu
         public void Dispose()
         {
             _screen.OpenLevelsMenuButtonClicked -= OnOpenLevelsMenuButtonClicked;
+            _screen.OpenUpgradeMenuButtonClicked -= OnOpenUpgradeMenuButtonClicked;
 
             foreach (IPresenter presenter in _childPresenters)
                 presenter.Dispose();
@@ -53,9 +55,12 @@ namespace Assets._Project.Develop.Runtime.UI.MainMenu
             _childPresenters.Add(walletPresenter);
         }
 
-        private void OnOpenLevelsMenuButtonClicked()
+        private void OnOpenLevelsMenuButtonClicked() => _popupService.OpenLevelsMenuPopup();
+
+        private void OnOpenUpgradeMenuButtonClicked()
         {
-            _popupService.OpenLevelsMenuPopup();
+            Debug.Log("+++");
+            _popupService.OpenStatsUpgradePopup();
         }
     }
 }

@@ -23,7 +23,9 @@ namespace Assets._Project.Develop.Runtime.UI.Core
             {ViewIDs.SimpleHealthBar, "UI/Gameplay/HealthBars/SimpleHealthBar" },
             {ViewIDs.HeroHealthBar, "UI/Gameplay/HealthBars/HeroHealthBar" },
             {ViewIDs.SelectableAbilityView, "UI/Gameplay/AbilitySelectPopup/SelectionAbilityView" },
-            {ViewIDs.AbilitySelectPopup, "UI/Gameplay/AbilitySelectPopup/SelectionAbilityPopup" }
+            {ViewIDs.AbilitySelectPopup, "UI/Gameplay/AbilitySelectPopup/SelectionAbilityPopup" },
+            {ViewIDs.UpgradableStatView, "UI/StatsUpgradePopup/UpgradableStatView" },
+            {ViewIDs.StatsUpgradePopupView, "UI/StatsUpgradePopup/StatsUpgradePopupView" }
         };
 
         public ViewsFactory(ResourcesAssetsLoader resourcesAssetsLoader)

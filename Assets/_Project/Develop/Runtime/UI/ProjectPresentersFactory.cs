@@ -1,11 +1,15 @@
-﻿using Assets._Project.Develop.Runtime.Configs.Meta.Wallet;
+﻿using Assets._Project.Develop.Runtime.Configs.Meta.Stats;
+using Assets._Project.Develop.Runtime.Configs.Meta.Wallet;
+using Assets._Project.Develop.Runtime.Gameplay.Features.StatsFeature;
 using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Meta.Features.LevelsProgression;
+using Assets._Project.Develop.Runtime.Meta.Features.StatsUpgrade;
 using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.UI.CommonViews;
 using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.UI.Core.TestPopup;
 using Assets._Project.Develop.Runtime.UI.LevelsMenuPopup;
+using Assets._Project.Develop.Runtime.UI.StatsUpgradePopup;
 using Assets._Project.Develop.Runtime.UI.Wallet;
 using Assets._Project.Develop.Runtime.Utilities.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilities.CoroutinesManagment;
@@ -34,6 +38,23 @@ namespace Assets._Project.Develop.Runtime.UI
                 _container.Resolve<ConfigsProviderService>().GetConfig<CurrencyIconsConfig>(),
                 view);
         }
+
+        public StatsUpgradePopupPresenter CreateStatsUpgradePopupPresenter(StatsUpgradePopupView view)
+            => new(
+                _container.Resolve<ICoroutinesPerformer>(),
+                view,
+                _container.Resolve<ViewsFactory>(),
+                this,
+                _container.Resolve<StatsUpgradeService>());
+
+        public UpgradableStatPresenter CreateUpgradableStatPresenter(UpgradableStatView view, StatType statType)
+            => new(
+                view,
+                _container.Resolve<ConfigsProviderService>().GetConfig<StatsViewConfig>(),
+                _container.Resolve<StatsUpgradeService>(),
+                _container.Resolve<WalletService>(),
+                statType,
+                _container.Resolve<ConfigsProviderService>().GetConfig<CurrencyIconsConfig>());
 
         public WalletPresenter CreateWalletPresenter(IconTextListView view)
         {

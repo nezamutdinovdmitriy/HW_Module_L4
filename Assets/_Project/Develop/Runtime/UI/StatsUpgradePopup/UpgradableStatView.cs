@@ -21,7 +21,7 @@ namespace Assets._Project.Develop.Runtime.UI.StatsUpgradePopup
             SetStatValueText(statValue);
         }
 
-        private void SetStatValueText(string statValue)
+        public void SetStatValueText(string statValue)
         {
             _statValueText.text = statValue;
         }
