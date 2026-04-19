@@ -14,5 +14,7 @@
         public const string HeroHealthBar = nameof(HeroHealthBar);
         public const string SelectableAbilityView = nameof(SelectableAbilityView);
         public const string AbilitySelectPopup = nameof(AbilitySelectPopup);
+        public const string UpgradableStatView = nameof(UpgradableStatView);
+        public const string StatsUpgradePopupView = nameof(StatsUpgradePopupView);
     }
 }
