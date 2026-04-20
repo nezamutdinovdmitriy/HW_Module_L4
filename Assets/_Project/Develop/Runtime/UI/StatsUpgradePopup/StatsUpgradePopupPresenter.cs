@@ -18,6 +18,8 @@ namespace Assets._Project.Develop.Runtime.UI.StatsUpgradePopup
         private List<UpgradableStatPresenter> _upgradableStatPresenters = new();
         private WalletPresenter _walletPresenter;
 
+        private CharacterPreviewPresenter _characterPreviewPresenter;
+
         public StatsUpgradePopupPresenter(
             ICoroutinesPerformer coroutinesPerformer,
             StatsUpgradePopupView view,
@@ -43,6 +45,9 @@ namespace Assets._Project.Develop.Runtime.UI.StatsUpgradePopup
             _walletPresenter = _projectPresentersFactory.CreateWalletPresenter(_view.CurrencyListView);
             _walletPresenter.Initialize();
 
+            _characterPreviewPresenter = _projectPresentersFactory.CreateCharacterPreviewPresenter();
+            _characterPreviewPresenter.Initialize();
+
             foreach (StatType statType in _statsUpgradeService.AvailableStats)
             {
                 UpgradableStatView upgradableStatView = _viewFactory.Create<UpgradableStatView>(ViewIDs.UpgradableStatView);
@@ -54,19 +59,11 @@ namespace Assets._Project.Develop.Runtime.UI.StatsUpgradePopup
             }
         }
 
-        protected override void OnPreHide()
-        {
-            base.OnPreHide();
-
-            foreach (UpgradableStatPresenter presenter in _upgradableStatPresenters)
-                presenter?.Dispose();
-        }
-
         public override void Dispose()
         {
             base.Dispose();
 
-            foreach(UpgradableStatPresenter presenter in _upgradableStatPresenters)
+            foreach (UpgradableStatPresenter presenter in _upgradableStatPresenters)
             {
                 presenter?.Dispose();
                 _view.UpgradableStatListView.Remove(presenter.View);
@@ -76,6 +73,15 @@ namespace Assets._Project.Develop.Runtime.UI.StatsUpgradePopup
             _upgradableStatPresenters.Clear();
 
             _walletPresenter?.Dispose();
+            _characterPreviewPresenter?.Dispose();
+        }
+
+        protected override void OnPreHide()
+        {
+            base.OnPreHide();
+
+            foreach (UpgradableStatPresenter presenter in _upgradableStatPresenters)
+                presenter?.Dispose();
         }
     }
 }

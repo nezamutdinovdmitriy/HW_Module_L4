@@ -13,12 +13,22 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AbilitiesFeature
         public AbilityFactory(DIContainer container)
             => _container = container;
 
-        public Ability CreateAbilityFor(Entity entity, AbilityConfig config)
+        public Ability CreateAbilityFor(Entity entity, AbilityConfig config, int currentLevel)
         {
             switch (config)
             {
                 case StatChangeAbilityConfig statChangeAbilityConfig:
-                    return new StatChangeAbility(entity, statChangeAbilityConfig);
+                    return new StatChangeAbility(entity, statChangeAbilityConfig, currentLevel);
+
+                case AdditionalDirectionsShotAbilityConfig additionalDirectionsShotAbilityConfig:
+                    return new AdditionalDirectionsShotAbility(entity, additionalDirectionsShotAbilityConfig, currentLevel);
+
+                case BounceProjectileAbilityConfig bounceProjectileAbilityConfig:
+                    return new BounceProjectileAbility(
+                        bounceProjectileAbilityConfig, 
+                        entity, 
+                        _container.Resolve<EntitiesLifeContext>(), 
+                        currentLevel);
 
                 default:
                     throw new ArgumentException();

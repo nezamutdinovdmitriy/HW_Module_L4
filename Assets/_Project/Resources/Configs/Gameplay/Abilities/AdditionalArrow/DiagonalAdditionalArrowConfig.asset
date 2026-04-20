@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b6a738650c9454f9527ea5604290f5, type: 3}
+  m_Name: DiagonalAdditionalArrowConfig
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: AdditionDiagonalArrow
+  <Name>k__BackingField: Diagonal arrow+
+  <Discription>k__BackingField: Add new diagonal arrow per shot
+  <Icon>k__BackingField: {fileID: 21300000, guid: 11ac96eec8ab44d4b93bde4e6a6cde19,
+    type: 3}
+  _additionalArrowsByLevel:
+  - <DirectionShotConfigs>k__BackingField:
+    - <Angel>k__BackingField: 45
+      <NumberOfProjectiles>k__BackingField: 1
+  - <DirectionShotConfigs>k__BackingField:
+    - <Angel>k__BackingField: -45
+      <NumberOfProjectiles>k__BackingField: 1
+  - <DirectionShotConfigs>k__BackingField:
+    - <Angel>k__BackingField: 135
+      <NumberOfProjectiles>k__BackingField: 1
+  - <DirectionShotConfigs>k__BackingField:
+    - <Angel>k__BackingField: -135
+      <NumberOfProjectiles>k__BackingField: 1

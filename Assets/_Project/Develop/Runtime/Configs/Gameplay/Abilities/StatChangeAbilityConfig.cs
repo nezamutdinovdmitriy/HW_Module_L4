@@ -11,6 +11,8 @@ namespace Assets._Project.Develop.Runtime.Configs.Gameplay.Abilities
     {
         [field: SerializeField] public StatType StatType { get; private set; }
 
+        public override int MaxLevel => 1;
+
         [SerializeField] private StatChangeOperation _operation;
         [SerializeField] private float _value;
 

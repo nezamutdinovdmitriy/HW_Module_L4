@@ -15,3 +15,8 @@ MonoBehaviour:
   _abilityConfigs:
   - {fileID: 11400000, guid: bbf22b4c345268a4bad01e6cf2d6fc94, type: 2}
   - {fileID: 11400000, guid: a50e200336e42144397138b004bdaf62, type: 2}
+  - {fileID: 11400000, guid: 7852face5de95c846b2b9bdb5feca8ff, type: 2}
+  - {fileID: 11400000, guid: dc17db4cf7251cf4ca818e4a4696b150, type: 2}
+  - {fileID: 11400000, guid: c415c943a17f135499e448c997e46af2, type: 2}
+  - {fileID: 11400000, guid: ab2c0b3eef0515745ae8a19199984903, type: 2}
+  - {fileID: 11400000, guid: d44bf9883ae917e499194bdebcbc6526, type: 2}

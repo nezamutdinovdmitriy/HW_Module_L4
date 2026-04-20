@@ -15,8 +15,8 @@ MonoBehaviour:
   <PrefabPath>k__BackingField: Entities/Characters/Ghost
   <MoveSpeed>k__BackingField: 9
   <RotationSpeed>k__BackingField: 900
-  <AttackProcessTime>k__BackingField: 0.5766668
-  <AttackDelayTime>k__BackingField: 0.4
+  <AttackProcessTime>k__BackingField: 1.63
+  <AttackDelayTime>k__BackingField: 1.26
   <AttackCooldown>k__BackingField: 1
   <InstantAttackDamage>k__BackingField: 50
   <MaxHealth>k__BackingField: 100

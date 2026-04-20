@@ -25,3 +25,7 @@ MonoBehaviour:
     <Name>k__BackingField: DMG
     <Sprite>k__BackingField: {fileID: 21300000, guid: ac8fb516c2eac49aea78689eb3305ef2,
       type: 3}
+  - <Type>k__BackingField: 4
+    <Name>k__BackingField: ATKSPD
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 08382050087b14af68be4d710904908f,
+      type: 3}

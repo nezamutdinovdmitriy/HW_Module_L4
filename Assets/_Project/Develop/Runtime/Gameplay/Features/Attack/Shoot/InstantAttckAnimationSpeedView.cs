@@ -10,13 +10,15 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack.Shoot
     public class InstantAttckAnimationSpeedView : MonoEntityView
     {
         [SerializeField] private string _attackMultiplierParameterName;
-        [SerializeField] private AnimationClip _animationClip;
+
+        private ReactiveVariable<float> _attackProcessInitialTime;
+        private ReactiveVariable<float> _attackProcessModifiedTime;
 
         private int _attackMultiplierParameterHash;
 
         private Animator _animator;
 
-        private ReactiveVariable<float> _attackProcessTime;
+        private IDisposable _attackProcessTimeChangedDisposable;
 
         private void Awake()
         {
@@ -29,9 +31,24 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack.Shoot
 
         protected override void OnEntityInitialized(Entity entity)
         {
-            _attackProcessTime = entity.AttackProcessInitialTime;
+            _attackProcessInitialTime = entity.AttackProcessInitialTime;
+            _attackProcessModifiedTime = entity.AttackProcessModifiedTime;
 
-            _animator.SetFloat(_attackMultiplierParameterHash, _animationClip.length / _attackProcessTime.Value);
+            _attackProcessTimeChangedDisposable = _attackProcessModifiedTime.Subscribe(OnAttackProcessTimeChanged);
+
+            OnAttackProcessTimeChanged(0, _attackProcessModifiedTime.Value);
         }
+
+        public override void Cleanup(Entity entity)
+        {
+            base.Cleanup(entity);
+
+            _attackProcessTimeChangedDisposable?.Dispose();
+        }
+
+        private void OnAttackProcessTimeChanged(float arg1, float currentAttackProcessTime)
+            => _animator.SetFloat(
+                _attackMultiplierParameterHash,
+                _attackProcessInitialTime.Value / currentAttackProcessTime);
     }
 }

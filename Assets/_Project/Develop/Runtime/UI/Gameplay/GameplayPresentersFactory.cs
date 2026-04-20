@@ -53,8 +53,14 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
         public SelectableAbilityPresenter CreateSelectableAbilityPresenter(
             AbilityConfig config,
             SelectableAbilityView view,
-            Entity entity)
-            => new(config, _container.Resolve<AbilityFactory>(), view, entity);
+            Entity entity,
+            int level)
+            => new(
+                config, 
+                _container.Resolve<AbilityFactory>(),
+                view,
+                entity, 
+                level);
 
         public WinPopupPresenter CreateWinPopupPresenter(WinPopupView view)
             => new(

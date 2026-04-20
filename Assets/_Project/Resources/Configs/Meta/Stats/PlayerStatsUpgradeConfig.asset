@@ -37,3 +37,11 @@ MonoBehaviour:
     - 11
     <CostType>k__BackingField: 0
     <UpgradeToNextLevelCost>k__BackingField: 320000006400000096000000
+  - <Type>k__BackingField: 4
+    <StatValue>k__BackingField:
+    - 0.33
+    - 2
+    - 4
+    - 6
+    <CostType>k__BackingField: 0
+    <UpgradeToNextLevelCost>k__BackingField: 0a000000320000006400000096000000

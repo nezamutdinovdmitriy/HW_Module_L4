@@ -27,6 +27,9 @@ namespace Assets._Project.Develop.Runtime.UI
             _container = container;
         }
 
+        public CharacterPreviewPresenter CreateCharacterPreviewPresenter()
+            => new(_container.Resolve<SceneLoaderService>(), _container.Resolve<ICoroutinesPerformer>());
+
         public CurrencyPresenter CreateCurrencyPresenter(
             IconTextView view,
             IReadOnlyVariable<int> currency,

@@ -12,7 +12,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack
 
         private ReactiveVariable<bool> _inAttackProcess;
 
-        private ReactiveVariable<float> _attackProcessInitialTime;
+        private ReactiveVariable<float> _attackProcessModifiedTime;
         private ReactiveVariable<float> _attackProcessCurrentTime;
 
         private IDisposable _timerDisposable;
@@ -21,7 +21,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack
         {
             _endAttackEvent = entity.EndAttackEvent;
             _inAttackProcess = entity.InAttackProcess;
-            _attackProcessInitialTime = entity.AttackProcessInitialTime;
+            _attackProcessModifiedTime = entity.AttackProcessModifiedTime;
             _attackProcessCurrentTime = entity.AttackProcessCurrentTime;
 
             _timerDisposable = _attackProcessCurrentTime.Subscribe(OnTimerChanged);
@@ -44,6 +44,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack
             }
         }
 
-        private bool TimerIsDone(float currentTime) => currentTime >= _attackProcessInitialTime.Value;
+        private bool TimerIsDone(float currentTime) => currentTime >= _attackProcessModifiedTime.Value;
     }
 }
